@@ -14,11 +14,11 @@ var ResourceList = React.createClass({
 			className: "",
 	    };
     },
-	getInitialState: function() {
+	/*getInitialState: function() {
 		return {
 			page: 1,
 		};
-	},
+	},*/
 	wrap: function(method, resource){
 		return method.bind(this, resource);
 	},

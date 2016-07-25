@@ -5,8 +5,12 @@ import ResourceList from './lib/resource-list.jsx';
 import ResourceTable from './lib/resource-table.jsx';
 import ResourceForm from './lib/resource-create-form.jsx';
 
+//higher order
+
+import ResourceListES6 from './lib/resource-list-es6.jsx';
+
 //lista
-ReactDOM.render(
+/*ReactDOM.render(
   <ResourceList
     url='http://sealcode.org:8082/api/v1/resources/task'
     listElementClass={Test}
@@ -14,7 +18,7 @@ ReactDOM.render(
 
   />,
   document.getElementById('app')
-);
+);*/
 
 //tabela
 /*ReactDOM.render(
@@ -25,3 +29,8 @@ ReactDOM.render(
 /*ReactDOM.render(
   <ResourceForm />,
   document.getElementById('app'));*/
+
+//Higher order
+ReactDOM.render(
+  <ResourceListES6 url='http://sealcode.org:8082/api/v1/resources/task'/>,
+  document.getElementById('app'));
