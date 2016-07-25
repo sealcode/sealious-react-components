@@ -2,7 +2,7 @@ var React = require("react");
 var rest = require("qwest");
 var merge = require("merge");
 
-var type_collection = require("./resource-type-collection.mixin.jsx");
+var type_collection = require("./mixins/resource-type-collection.jsx");
 
 var Pagination = require("./resource-list-pagination.jsx");
 
@@ -38,19 +38,23 @@ var ResourceList = React.createClass({
 		var self = this;
 		var list_elements = this.state.resources.map(function(resource){
 			return React.createElement(self.props.listElementClass, {
-				resource: resource, 
+				resource: resource,
 				key: resource.id,
 				onDelete: self.wrap(self.delete, resource),
 				afterChange: self.refresh
 			});
 		});
 
-		var pagination = <Pagination
-			hasPrev={this.state.pagination.page!=1} 
-			hasNext={this.state.resources.length == 12}
-			onPrev={this.prevPage}
-			onNext={this.nextPage}
-		/>
+		var pagination = null;
+		if(this.props.paginate){
+			var pagination = <Pagination
+				hasPrev={this.state.pagination.page!=1}
+				hasNext={this.state.resources.length == (this.props.itemsPerPage != null ? this.props.itemsPerPage : this.state.pagination.items)}
+				onPrev={this.prevPage}
+				onNext={this.nextPage}
+			/>
+		}
+
 
 		if(this.state.loading){
 			return <div>wczytywanie...</div>
@@ -65,7 +69,7 @@ var ResourceList = React.createClass({
 					{React.createElement(this.props.containerComponent, {className: "resource-list"}, list_elements)}
 					{pagination}
 				</div>
-				)			
+				)
 		}else if(self.props.emptyClass){
 			return <div>
 				{pagination}

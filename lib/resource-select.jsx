@@ -1,6 +1,6 @@
 var React = require("react");
 
-var type_collection = require("./resource-type-collection.mixin.jsx");
+var type_collection = require("./mixins/resource-type-collection.jsx");
 
 var ResourceSelect = React.createClass({
 	mixins: [type_collection],
@@ -21,7 +21,7 @@ var ResourceSelect = React.createClass({
 		if(this.refs.select.value == "undefined"){
 			return undefined;
 		}else{
-			return this.refs.select.value;			
+			return this.refs.select.value;
 		}
 	},
 	handleChange: function(e){

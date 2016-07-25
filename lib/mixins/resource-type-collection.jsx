@@ -16,7 +16,8 @@ module.exports = {
 	        resources: [],
 	        last_loaded: -Infinity,
 	        last_query: {},
-	        pagination: clone(default_pagination),
+	        //pagination: clone(default_pagination),
+					pagination: (this.props.itemsPerPage != null ? {page:1, items: this.props.itemsPerPage} : clone(default_pagination)),
 	    };
 	},
 	getDefaultProps() {
@@ -34,7 +35,7 @@ module.exports = {
 		if(props.paginate){
 			query.pagination = this.state.pagination;
 		}
-		
+
 		if(props.search){
 			query.search = props.search;
 		}
@@ -75,7 +76,7 @@ module.exports = {
 	},
 	resetPagination: function(cb){
 		this.setState({
-			pagination: clone(default_pagination)
+			pagination: (this.props.itemsPerPage != null ? {page:1, items: this.props.itemsPerPage} : clone(default_pagination))
 		}, cb)
 	},
 	fetch: function(query){
@@ -84,19 +85,19 @@ module.exports = {
 			loading: true
 		})
 //		console.log(self.props.url);
-		return rest.get(self.props.url, query)
+		return rest.get(self.props.url, query, {cache: true})
 		.then(function(xml, response){
 			self.setState({
 				loading: false,
 				resources: response,
 				last_query: clone(query)
 			})
-		})			
+		})
 
 	},
 	refresh: function(force){
 		var self = this;
-
+		console.log('refresh');
 		var query = this.generateQuery(this.props);
 
 		if(self.paginationResetNeeded(query)){
@@ -119,14 +120,15 @@ module.exports = {
 	componentWillReceiveProps: function(next_props) {
 		var self = this;
 		setTimeout(function(){
-			self.refresh();			
+			self.refresh();
 		}, 0)
 	},
 	delete: function(resource){
 		var self = this;
-		rest.delete(self.props.url + "/" + resource.id)
+		rest.delete(self.props.url + "/" + resource.id, {}, {cache: true})
 		.then(function(){
-			self.refresh();
+			console.log('dweleteuje');
+			self.refresh(true);
 		})
 	}
 }
