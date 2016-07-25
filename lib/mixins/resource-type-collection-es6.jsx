@@ -113,6 +113,20 @@ export default function ResourceTypeCollection(Component){
 		componentDidMount: function(){
 			this.refresh();
 		},
+		componentWillReceiveProps: function(next_props) {
+			var self = this;
+			setTimeout(function(){
+				self.refresh();
+			}, 0)
+		},
+		delete: function(resource){
+			var self = this;
+			rest.delete(self.props.url + "/" + resource.id, {}, {cache: true})
+			.then(function(){
+				console.log('dweleteuje');
+				self.refresh(true);
+			})
+		},
 		render: function(){
 			let thingsFromState = {
 				resources: this.state.resources,

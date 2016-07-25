@@ -32,5 +32,5 @@ import ResourceListES6 from './lib/resource-list-es6.jsx';
 
 //Higher order
 ReactDOM.render(
-  <ResourceListES6 url='http://sealcode.org:8082/api/v1/resources/task'/>,
+  <ResourceListES6 url='http://sealcode.org:8082/api/v1/resources/task' listElementClass={Test} />,
   document.getElementById('app'));
