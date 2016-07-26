@@ -5,7 +5,7 @@ import deep_equal from "deep-equal";
 import clone from "clone";
 import promise from "bluebird";
 
-var default_pagination = {
+const default_pagination = {
 	page: 1,
 	items: 12
 }
@@ -31,7 +31,7 @@ export default function ResourceTypeCollection(Component){
 		},
 		generateQuery: function(props){
 
-			var query = {};
+			let query = {};
 
 			if(props.paginate){
 				query.pagination = this.state.pagination;
@@ -41,7 +41,7 @@ export default function ResourceTypeCollection(Component){
 			}
 			if(props.filter){
 				query.filter = props.filter;
-				for(var i in query.filter){
+				for(let i in query.filter){
 					if(query.filter[i]=="undefined" || query.filter[i]===null){
 						delete query.filter
 					}
@@ -63,7 +63,7 @@ export default function ResourceTypeCollection(Component){
 			if(deep_equal(query.pagination, default_pagination)){
 				return false;
 			}
-			for(var attr in query){
+			for(let attr in query){
 				if(attr != "pagination"){
 					if(!deep_equal(query[attr], this.state.last_query[attr])){
 						return true;
@@ -78,13 +78,12 @@ export default function ResourceTypeCollection(Component){
 			}, cb)
 		},
 		fetch: function(query){
-			var self = this;
-			self.setState({
+			this.setState({
 				loading: true
 			});
-			return rest.get(self.props.url, query, {cache: true})
-			.then(function(xml, response){
-				self.setState({
+			return rest.get(this.props.url, query, {cache: true})
+			.then((xml, response) => {
+				this.setState({
 					loading: false,
 					resources: response,
 					last_query: clone(query)
@@ -92,20 +91,17 @@ export default function ResourceTypeCollection(Component){
 			})
 		},
 		refresh: function(force){
-			var self = this;
-			console.log('refresh');
-			var query = this.generateQuery(this.props);
-
-			if(self.paginationResetNeeded(query)){
+			let query = this.generateQuery(this.props);
+			if(this.paginationResetNeeded(query)){
 				console.log("pagination reset needed!");
-				self.resetPagination(function(){
+				this.resetPagination(() => {
 					console.log("pagination has been reset!");
-					self.fetch(query);
+					this.fetch(query);
 				})
 				return;
 			}
-			if(force || self.reloadNeeded(query)){
-				return self.fetch(query);
+			if(force || this.reloadNeeded(query)){
+				return this.fetch(query);
 			}else{
 				return Promise.resolve();
 			}
@@ -114,17 +110,14 @@ export default function ResourceTypeCollection(Component){
 			this.refresh();
 		},
 		componentWillReceiveProps: function(next_props) {
-			var self = this;
-			setTimeout(function(){
-				self.refresh();
+			setTimeout(() => {
+				this.refresh();
 			}, 0)
 		},
 		delete: function(resource){
-			var self = this;
-			rest.delete(self.props.url + "/" + resource.id, {}, {cache: true})
-			.then(function(){
-				console.log('dweleteuje');
-				self.refresh(true);
+			rest.delete(this.props.url + "/" + resource.id, {}, {cache: true})
+			.then(() => {
+				this.refresh(true);
 			})
 		},
 		nextPage: function(){
