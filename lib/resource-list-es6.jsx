@@ -12,11 +12,9 @@ let ResourceList = React.createClass({
     };
   },
 	wrap: function(method, resource){
-		return method.bind(this, resource);
+		return method.bind(null, resource);
 	},
 	render: function(){
-
-		console.log(this.props);
 
 		let list_elements = this.props.resources.map((resource) => {
 			return React.createElement(this.props.listElementClass, {
@@ -26,12 +24,39 @@ let ResourceList = React.createClass({
 				afterChange: this.props.refresh
 			});
 		});
+
+		let pagination = null;
+		if(this.props.paginate){
+			pagination = <Pagination
+				hasPrev={this.props.pagination.page!=1}
+				hasNext={this.props.resources.length == (this.props.itemsPerPage != null ? this.props.itemsPerPage : this.props.pagination.items) }
+				onPrev={this.props.prevPage}
+				onNext={this.props.nextPage}
+			/>
+		}
+
+
 		if(list_elements.length){
 			return (
-				<div>{React.createElement(this.props.containerComponent, {className: "resource-list"}, list_elements)}</div>
+				<div className = {this.props.className}>
+					{pagination}
+					{React.createElement(this.props.containerComponent, {className: "resource-list"}, list_elements)}
+					{pagination}
+				</div>
 			)
-		} else{
-			return <div>Loading...</div>
+		} else if(this.props.emptyClass){
+			return (
+				<div>
+					{pagination}
+					{React.createElement(this.props.emptyClass)}
+				</div>
+			)
+		}else{
+			return(
+				<div>
+					{pagination}
+				</div>
+			)
 		}
 
 	}

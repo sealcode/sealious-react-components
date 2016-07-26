@@ -127,16 +127,30 @@ export default function ResourceTypeCollection(Component){
 				self.refresh(true);
 			})
 		},
+		nextPage: function(){
+			this.setState({
+				pagination: merge(this.state.pagination, {page: this.state.pagination.page + 1})
+			});
+			this.refresh();
+		},
+		prevPage: function(){
+			this.setState({
+				pagination: merge(this.state.pagination, {page: this.state.pagination.page - 1})
+			});
+			this.refresh();
+		},
 		render: function(){
-			let thingsFromState = {
+			let customProps = {
 				resources: this.state.resources,
 				pagination: this.state.pagination,
 				loading: this.state.loading,
 				delete: this.delete,
-				refresh: this.refresh
+				refresh: this.refresh,
+				nextPage: this.nextPage,
+				prevPage: this.prevPage
 			}
 
-			return <Component {...this.props} {...thingsFromState} />
+			return <Component {...this.props} {...customProps} />
 		}
 	});
 }
