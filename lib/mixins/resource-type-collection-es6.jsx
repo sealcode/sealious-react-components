@@ -131,7 +131,9 @@ export default function ResourceTypeCollection(Component){
 			let thingsFromState = {
 				resources: this.state.resources,
 				pagination: this.state.pagination,
-				loading: this.state.loading
+				loading: this.state.loading,
+				delete: this.delete,
+				refresh: this.refresh
 			}
 
 			return <Component {...this.props} {...thingsFromState} />

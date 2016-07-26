@@ -11,6 +11,9 @@ let ResourceList = React.createClass({
 			className: "",
     };
   },
+	wrap: function(method, resource){
+		return method.bind(this, resource);
+	},
 	render: function(){
 
 		console.log(this.props);
@@ -19,8 +22,8 @@ let ResourceList = React.createClass({
 			return React.createElement(this.props.listElementClass, {
 				resource: resource,
 				key: resource.id,
-				//onDelete: this.wrap(this.delete, resource),
-				//afterChange: this.refresh
+				onDelete: this.wrap(this.props.delete, resource),
+				afterChange: this.props.refresh
 			});
 		});
 		if(list_elements.length){
