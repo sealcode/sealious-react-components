@@ -36,9 +36,13 @@ import ResourceTableES6 from './lib/resource-table-es6.jsx';
   document.getElementById('app'));*/
 
 //Higher order list
-/*ReactDOM.render(
-  <ResourceListES6 url='http://sealcode.org:8082/api/v1/resources/task' listElementClass={Test} paginate={true} itemsPerPage={4}/>,
-  document.getElementById('app'));*/
+ReactDOM.render(
+  <ResourceListES6 url='http://sealcode.org:8082/api/v1/resources/task'
+  listElementClass={Test}
+  paginate={true}
+  itemsPerPage={4}/>,
+  document.getElementById('app')
+);
 
 //higher order table
 /*ReactDOM.render(
@@ -50,7 +54,7 @@ import ResourceTableES6 from './lib/resource-table-es6.jsx';
     document.getElementById('app')
   );*/
 //higher order form
-let myModel = {
+/*let myModel = {
   name: "text",
   surname: "text",
   age: {
@@ -64,4 +68,4 @@ let myModel = {
 }
 ReactDOM.render(
   <ResourceForm model={myModel}/>,
-  document.getElementById('app'));
+  document.getElementById('app'));*/

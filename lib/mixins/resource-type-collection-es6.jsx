@@ -10,7 +10,7 @@ const default_pagination = {
 	items: 12
 }
 
-export default function ResourceTypeCollection(Component){
+export default function ResourceTypeCollection(ComponentClass){
 	return React.createClass({
 
 		getInitialState: function() {
@@ -133,7 +133,7 @@ export default function ResourceTypeCollection(Component){
 			this.refresh();
 		},
 		render: function(){
-			let customProps = {
+			const customProps = {
 				resources: this.state.resources,
 				pagination: this.state.pagination,
 				loading: this.state.loading,
@@ -143,7 +143,7 @@ export default function ResourceTypeCollection(Component){
 				prevPage: this.prevPage
 			}
 
-			return <Component {...this.props} {...customProps} />
+			return <ComponentClass {...this.props} {...customProps} />
 		}
 	});
 }
