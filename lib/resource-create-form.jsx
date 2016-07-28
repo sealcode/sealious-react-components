@@ -1,31 +1,58 @@
-var React = require("react");
-var qwest = require('qwest');
-var clone = require("clone");
+import React from "react";
+import rest from "qwest";
+import clone from "clone";
 
-var basicModel = {
+const basicModel = {
 	title: 'text',
-	content: 'textarea'
+	content: 'textarea',
+	myselect: {
+		select: [
+			"value1",
+			"value2",
+			"value3"
+		]
+	}
 };
 
-var ResourceCreateForm = React.createClass({
+const ResourceCreateForm = React.createClass({
 	getDefaultProps(){
 		return {
 			model: clone(basicModel)
 		}
 	},
-	render: function(){
-		var model = this.props.model;
-
-		var formStruct = Object.keys(model).map(function(key){
-			console.log(model[key]);
+	generateForm: function(model){
+		let formStruct = Object.keys(model).map(function(key){
+			//console.log(model[key]);
+			if(model[key] == "text"){
+				return <input type={model[key]} />
+			} else if(model[key] == "textarea"){
+				return <textarea />
+			} else if(typeof model[key] === "object"){
+				if(Object.keys(model[key])[0] == "select"){
+					let select = model[key].select;
+					let options = select.map((option) => {
+						return <option value={option}>{option}</option>
+					});
+					return (
+						<select>
+							{options}
+						</select>
+					)
+				}
+			}
 		});
+		return formStruct;
+	},
+	render: function(){
+
+		let formStruct = this.generateForm(this.props.model)
 
 		return (
 			<div>
-
+				{formStruct}
 			</div>
 		)
 	}
 })
 
-module.exports = ResourceCreateForm;
+export default ResourceCreateForm;

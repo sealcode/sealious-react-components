@@ -41,11 +41,27 @@ import ResourceTableES6 from './lib/resource-table-es6.jsx';
   document.getElementById('app'));*/
 
 //higher order table
-  ReactDOM.render(
+/*ReactDOM.render(
     <ResourceTableES6
       url='http://sealcode.org:8082/api/v1/resources/task'
       paginate={true}
       itemsPerPage={3}
     />,
     document.getElementById('app')
-  );
+  );*/
+//higher order form
+let myModel = {
+  name: "text",
+  surname: "text",
+  age: {
+    select: [
+      "4 - 10",
+      "11 - 20",
+      "21 - 100"
+    ]
+  },
+  describe_yourself: "textarea"
+}
+ReactDOM.render(
+  <ResourceForm model={myModel}/>,
+  document.getElementById('app'));
