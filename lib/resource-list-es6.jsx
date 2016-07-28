@@ -8,7 +8,7 @@ const ResourceList = React.createClass({
 	getDefaultProps: function() {
     return {
 			containerComponent: "ul",
-			className: "",
+			className: ""
     };
   },
 	wrap: function(method, resource){
