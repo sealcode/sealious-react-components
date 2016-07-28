@@ -1,20 +1,20 @@
-var React = require("react");
+import React from "react";
 
-var ResourceListPagination = React.createClass({
+const ResourceListPagination = React.createClass({
 	render: function(){
 
 		return (
 			<ul className="resource-list-pagination">
-				<li 
-					className="btn" 
+				<li
+					className="btn"
 					style={{visibility: this.props.hasPrev? "visible" : "hidden"}}
 					onClick={this.props.onPrev}
 				>
 					&#x25C0; poprzednie
 				</li>
 
-				<li 
-					className="btn" 
+				<li
+					className="btn"
 					style={{visibility: this.props.hasNext? "visible" : "hidden"}}
 					onClick={this.props.onNext}
 				>
@@ -25,5 +25,4 @@ var ResourceListPagination = React.createClass({
 	}
 })
 
-
-module.exports = ResourceListPagination;
+export default ResourceListPagination;

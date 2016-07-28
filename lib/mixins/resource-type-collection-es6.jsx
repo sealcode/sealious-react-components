@@ -21,7 +21,7 @@ export default function ResourceTypeCollection(Component){
 						pagination: (this.props.itemsPerPage != null ? {page:1, items: this.props.itemsPerPage} : clone(default_pagination)),
 		    };
 		},
-		getDefaultProps() {
+		getDefaultProps: function() {
 		    return {
 		        paginate: false,
 		        filter: {},
