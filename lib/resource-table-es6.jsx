@@ -4,80 +4,77 @@ import merge from "merge";
 import Pagination from "./resource-list-pagination.jsx";
 import ResourceTypeCollection from './mixins/resource-type-collection-es6.jsx';
 
-
-const DefaultRow = React.createClass({
-	render: function(){
-		try{
-			let body = this.props.resource.body;
-			let cells = Object.keys(body).map((key) => {
-				let content = body[key];
-				return (
-					<td key={key}>
-						{content}
-					</td>
-				)
-			});
-			return <tr key={this.props.resource.id}>{cells}</tr>
-		}catch(e){
-			console.log(e);
-		}
+const DefaultRow = (props) => {
+	try{
+		const body = props.resource.body;
+		const cells = Object.keys(body).map((key) => {
+			let content = body[key];
+			return (
+				<td key={key}>
+					{content}
+				</td>
+			)
+		});
+		return <tr key={props.resource.id}>{cells}</tr>
+	}catch(e){
+		console.log(e);
 	}
-})
+}
 
-const ResourceTable = React.createClass({
+const ResourceTable = (props) => {
 
-	getDefaultProps: function() {
-    return {
-        rowComponent: DefaultRow
-    };
-	},
-	wrap: function(method, resource){
+	const default_props = {
+		rowComponent: DefaultRow
+  }
+
+	const merged_props = merge(default_props, props);
+
+	const wrap = function(method, resource){
 		return method.bind(this, resource);
-	},
-	render: function(){
-
-		let pagination = null;
-		if(this.props.paginate){
-			pagination = <Pagination
-				hasPrev={this.props.pagination.page!=1}
-				hasNext={this.props.resources.length == (this.props.itemsPerPage != null ? this.props.itemsPerPage : this.props.pagination.items)}
-				onPrev={this.props.prevPage}
-				onNext={this.props.nextPage}
-			/>
-		}
-
-		try{
-			let rows = this.props.resources.map((resource) => {
-				return React.createElement(this.props.rowComponent, {
-					key: resource.id,
-					resource: resource
-				});
-			});
-
-			if(rows.length){
-				return (
-					<div>
-						{pagination}
-						<table>
-							<tbody>
-								{rows}
-							</tbody>
-						</table>
-						{pagination}
-					</div>
-				)
-			} else{
-				return(
-					<div>
-						{pagination}
-					</div>
-				)
-			}
-
-		}catch(e){
-			console.log(e);
-		}
 	}
-})
+
+	let pagination = null;
+	if(props.paginate){
+		pagination = <Pagination
+			hasPrev={merged_props.pagination.page!=1}
+			hasNext={merged_props.resources.length == (merged_props.itemsPerPage != null ? merged_props.itemsPerPage : merged_props.pagination.items)}
+			onPrev={merged_props.prevPage}
+			onNext={merged_props.nextPage}
+		/>
+	}
+
+	try{
+		const rows = merged_props.resources.map((resource) => {
+			return React.createElement(merged_props.rowComponent, {
+				key: resource.id,
+				resource: resource
+			});
+		});
+
+		if(rows.length){
+			return (
+				<div>
+					{pagination}
+					<table>
+						<tbody>
+							{rows}
+						</tbody>
+					</table>
+					{pagination}
+				</div>
+			)
+		} else{
+			return(
+				<div>
+					{pagination}
+				</div>
+			)
+		}
+
+	}catch(e){
+		console.log(e);
+	}
+
+}
 
 export default ResourceTypeCollection(ResourceTable);

@@ -36,23 +36,23 @@ import ResourceTableES6 from './lib/resource-table-es6.jsx';
   document.getElementById('app'));*/
 
 //Higher order list
-ReactDOM.render(
+/*ReactDOM.render(
   <ResourceListES6 url='http://sealcode.org:8082/api/v1/resources/task'
   listElementClass={Test}
   paginate={true}
   itemsPerPage={4}/>,
   document.getElementById('app')
-);
+);*/
 
 //higher order table
-/*ReactDOM.render(
+ReactDOM.render(
     <ResourceTableES6
       url='http://sealcode.org:8082/api/v1/resources/task'
       paginate={true}
       itemsPerPage={3}
     />,
     document.getElementById('app')
-  );*/
+  );
 //higher order form
 /*let myModel = {
   name: "text",
