@@ -22,7 +22,7 @@ const ResourceSelect = React.createClass({
 		this.props.onChange && this.props.onChange(e)
 	},
 	render: function(){
-		var options = this.props.resources.map((resource) => {
+		const options = this.props.resources.map((resource) => {
 			return (
 				<option value={this.props.valueAttr? resource.body[this.props.valueAttr] : resource.id} key={resource.id}>
 					{resource[this.props.displayAttr] || resource.body[this.props.displayAttr]}
