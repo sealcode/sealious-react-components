@@ -1,15 +1,9 @@
-var React = require("react");
+import React from "react";
+import ResourceTypeCollection from './mixins/resource-type-collection-es6.jsx';
+import merge from "merge";
 
-var type_collection = require("./mixins/resource-type-collection.jsx");
-
-var ResourceSelect = React.createClass({
-	mixins: [type_collection],
-	getInitialState: function() {
-	    return {
-	          value: this.props.value
-	    };
-	},
-	getDefaultProps() {
+const ResourceSelect = React.createClass({
+	getDefaultProps: function() {
 	    return {
 	        displayAttr: "id",
 	        noValueOptionName: "--",
@@ -28,11 +22,11 @@ var ResourceSelect = React.createClass({
 		this.props.onChange && this.props.onChange(e)
 	},
 	render: function(){
-		var self = this;
-		var options = this.state.resources.map(function(resource){
-			return <option value={self.props.valueAttr? resource.body[self.props.valueAttr] : resource.id} key={resource.id}>
-				{resource[self.props.displayAttr] || resource.body[self.props.displayAttr]}
-			</option>
+		const options = this.props.resources.map((resource) => {
+			return (
+				<option value={this.props.valueAttr? resource.body[this.props.valueAttr] : resource.id} key={resource.id}>
+					{resource[this.props.displayAttr] || resource.body[this.props.displayAttr]}
+				</option>)
 		})
 
 		if(this.props.allowNoValue){
@@ -43,16 +37,16 @@ var ResourceSelect = React.createClass({
 			)
 		}
 
-		console.log("self.props.disabled", self.props.disabled);
+		console.log("this.props.disabled", this.props.disabled);
 		return (
 			<label>
-				{self.props.label}
-				<select ref="select" onChange={this.handleChange} value={this.props.value} disabled={self.props.disabled || false}>
+				{this.props.label}
+				<select ref="select" onChange={this.handleChange} value={this.props.value} disabled={this.props.disabled || false}>
 					{options}
 				</select>
 			</label>
 		)
 	}
-})
+});
 
-module.exports = ResourceSelect;
+export default ResourceTypeCollection(ResourceSelect);

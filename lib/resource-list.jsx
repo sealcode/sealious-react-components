@@ -1,86 +1,63 @@
-var React = require("react");
-var rest = require("qwest");
-var merge = require("merge");
+import React from "react";
+import rest from "qwest";
+import merge from "merge";
+import Pagination from "./resource-list-pagination.jsx";
+import ResourceTypeCollection from './mixins/resource-type-collection-es6.jsx';
 
-var type_collection = require("./mixins/resource-type-collection.jsx");
+const ResourceList = (props) => {
+	const default_props = {
+		containerComponent: "ul",
+		className: ""
+  }
 
-var Pagination = require("./resource-list-pagination.jsx");
+	const merged_props = merge(default_props, props);
 
-var ResourceList = React.createClass({
-	mixins: [type_collection],
-	getDefaultProps() {
-	    return {
-			containerComponent: "ul",
-			className: "",
-	    };
-    },
-	/*getInitialState: function() {
-		return {
-			page: 1,
-		};
-	},*/
-	wrap: function(method, resource){
-		return method.bind(this, resource);
-	},
-	nextPage: function(){
-		this.setState({
-			pagination: merge(this.state.pagination, {page: this.state.pagination.page + 1})
-		});
-		this.refresh();
-	},
-	prevPage: function(){
-		this.setState({
-			pagination: merge(this.state.pagination, {page: this.state.pagination.page - 1})
-		});
-		this.refresh();
-	},
-	render: function(){
-		var self = this;
-		var list_elements = this.state.resources.map(function(resource){
-			return React.createElement(self.props.listElementClass, {
-				resource: resource,
-				key: resource.id,
-				onDelete: self.wrap(self.delete, resource),
-				afterChange: self.refresh
-			});
-		});
-
-		var pagination = null;
-		if(this.props.paginate){
-			var pagination = <Pagination
-				hasPrev={this.state.pagination.page!=1}
-				hasNext={this.state.resources.length == (this.props.itemsPerPage != null ? this.props.itemsPerPage : this.state.pagination.items)}
-				onPrev={this.prevPage}
-				onNext={this.nextPage}
-			/>
-		}
-
-
-		if(this.state.loading){
-			return <div>wczytywanie...</div>
-		} else if (list_elements.length){
-
-
-
-
-			return (
-				<div className={this.props.className}>
-					{pagination}
-					{React.createElement(this.props.containerComponent, {className: "resource-list"}, list_elements)}
-					{pagination}
-				</div>
-				)
-		}else if(self.props.emptyClass){
-			return <div>
-				{pagination}
-				{React.createElement(self.props.emptyClass)}
-			</div>
-		}else{
-			return <div>
-				{pagination}
-			</div>
-		}
+	const wrap = function(method, resource){
+		return method.bind(null, resource);
 	}
-})
 
-module.exports = ResourceList;
+	const list_elements = props.resources.map((resource) => {
+		return React.createElement(merged_props.listElementClass, {
+			resource: resource,
+			key: resource.id,
+			onDelete: wrap(merged_props.delete, resource),
+			afterChange: merged_props.refresh
+		});
+	});
+
+	let pagination = null;
+	if(props.paginate){
+		pagination = <Pagination
+			hasPrev={merged_props.pagination.page!=1}
+			hasNext={merged_props.resources.length == (merged_props.itemsPerPage != null ? merged_props.itemsPerPage : merged_props.pagination.items) }
+			onPrev={merged_props.prevPage}
+			onNext={merged_props.nextPage}
+		/>
+	}
+
+	if(list_elements.length){
+		return (
+			<div className = {merged_props.className}>
+				{pagination}
+				{React.createElement(merged_props.containerComponent, {className: "resource-list"}, list_elements)}
+				{pagination}
+			</div>
+		)
+	} else if(merged_props.emptyClass){
+		return (
+			<div>
+				{pagination}
+				{React.createElement(merged_props.emptyClass)}
+			</div>
+		)
+	}else{
+		return(
+			<div>
+				{pagination}
+			</div>
+		)
+	}
+
+};
+
+export default ResourceTypeCollection(ResourceList);
