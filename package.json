@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "istanbul test _mocha -- tests/* --recursive --require babel-register",
+    "cover": "babel-istanbul cover --include-all-sources _mocha --  -R spec tests/* --recursive",
     "build": "browserify index.js -o bundle.js -t [ babelify --presets [ es2015 react ] ]",
     "watch": "watchify index.js -o bundle.js -t [ babelify --presets [ es2015 react ] ] -v"
   },
@@ -19,10 +20,12 @@
   },
   "homepage": "https://github.com/sealcode/sealious-react-components#readme",
   "devDependencies": {
+    "babel-istanbul": "^0.11.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
+    "mocha": "^3.0.1",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "watchify": "^3.7.0"
