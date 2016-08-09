@@ -2,21 +2,24 @@ import React from "react";
 import merge from "merge";
 import Pagination from "./resource-list-pagination.jsx";
 
+export const default_props = {
+	containerComponent: "ul",
+	className: ""
+}
+
+export const wrap = function(method, resource){
+	if(method==undefined){
+		return undefined;
+	}else{
+		return method.bind(null, resource);
+	}
+}
+
 const ResourceList = (props) => {
-	const default_props = {
-		containerComponent: "ul",
-		className: ""
-  }
+
 
 	const merged_props = merge(default_props, props);
 
-	const wrap = function(method, resource){
-		if(method==undefined){
-		    return undefined;
-		}else{
-			return method.bind(null, resource);
-		}
-	}
 
 	const list_elements = props.resources.map((resource) => {
 		return React.createElement(merged_props.listElementClass, {
@@ -62,4 +65,4 @@ const ResourceList = (props) => {
 
 };
 
-module.exports = ResourceList;
+export default ResourceList;
