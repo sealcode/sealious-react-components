@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "istanbul test _mocha -- tests/* --recursive --require babel-register",
-    "cover": "babel-istanbul cover --include-all-sources _mocha --  -R spec tests/* --recursive",
     "build": "browserify index.js -o bundle.js -t [ babelify --presets [ es2015 react ] ]",
     "watch": "watchify index.js -o bundle.js -t [ babelify --presets [ es2015 react ] ] -v"
   },
@@ -26,6 +25,7 @@
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
     "enzyme": "^2.4.1",
+    "expect.js": "^0.3.1",
     "istanbul": "^0.4.4",
     "mocha": "^3.0.1",
     "react": "^15.2.1",

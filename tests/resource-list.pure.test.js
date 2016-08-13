@@ -4,6 +4,7 @@ import {wrap} from "../lib/resource-list.pure.jsx";
 import React from 'react';
 import { shallow } from 'enzyme';
 import Pagination from "../lib/resource-list-pagination.jsx";
+//import expect from "expect.js";
 
 const m = {
 	resources: [
@@ -14,14 +15,14 @@ const m = {
 };
 
 const w = shallow(<PureResourceList {...m} paginate={true} pagination={{page:1, items:12}}/>);
-console.log(w.find(Pagination));
+// console.log(w.find(Pagination));
 
 describe("resource-list", function(){
 	const minProps = {
 		resources: [
 			{id: "1234", body: {foo: "bar"}},
 			{id: "1234", body: {foo: "bar"}},
-
+			{id: "1234", body: {foo: "bar"}},
 		]
 	};
 
@@ -31,9 +32,9 @@ describe("resource-list", function(){
 	});
 
 	it("should have pagination", function(){
-		const wrapper = shallow(<PureResourceList {...minProps} paginate={true} pagination={{page:1, items:12}}/>);
-		assert.equal(wrapper.find(Pagination).length, 1);
-
+		const wrapper = shallow(<PureResourceList {...minProps} paginate={true} pagination={{page:1, items:12}} itemsPerPage={2}/>);
+		assert.equal(wrapper.find(Pagination).length, 2);
+		//expect(wrapper.find(Pagination)).to.have.length(1);
 	});
 
 	it("shouldn't have pagination", function(){

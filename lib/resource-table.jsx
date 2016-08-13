@@ -45,6 +45,7 @@ const ResourceTable = (props) => {
 
 	try{
 		const rows = merged_props.resources.map((resource) => {
+			console.log("resource-table", merged_props.rowComponent)
 			return React.createElement(merged_props.rowComponent, {
 				key: resource.id,
 				resource: resource

@@ -4,7 +4,8 @@ import Pagination from "./resource-list-pagination.jsx";
 
 export const default_props = {
 	containerComponent: "ul",
-	className: ""
+	className: "",
+	listElementClass: "li",
 }
 
 export const wrap = function(method, resource){
@@ -30,28 +31,27 @@ const ResourceList = (props) => {
 		});
 	});
 
-	let pagination = null;
+	let pagination_props = null;
 	if(props.paginate){
-		pagination = <Pagination
-			hasPrev={merged_props.pagination.page!=1}
-			hasNext={merged_props.resources.length == (merged_props.itemsPerPage != null ? merged_props.itemsPerPage : merged_props.pagination.items) }
-			onPrev={merged_props.prevPage}
-			onNext={merged_props.nextPage}
-		/>
+		pagination_props = {
+			hasPrev: merged_props.pagination.page!=1,
+			hasNext: merged_props.resources.length == (merged_props.itemsPerPage != null ? merged_props.itemsPerPage : merged_props.pagination.items),
+			onPrev: merged_props.prevPage,
+			onNext: merged_props.nextPage,
+		}
 	}
-
 	if(list_elements.length){
 		return (
 			<div className = {merged_props.className}>
-				{pagination}
+				{props.paginate ? React.createElement(Pagination, pagination_props) : null}
 				{React.createElement(merged_props.containerComponent, {className: "resource-list"}, list_elements)}
-				{pagination}
+				{props.paginate ? React.createElement(Pagination, pagination_props) : null}
 			</div>
 		)
 	} else if(merged_props.emptyClass){
 		return (
 			<div>
-				{pagination}
+				{React.createElement()}
 				{React.createElement(merged_props.emptyClass)}
 			</div>
 		)
