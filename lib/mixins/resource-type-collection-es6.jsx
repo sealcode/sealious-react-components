@@ -3,7 +3,7 @@ import rest from "qwest";
 import merge from "merge";
 import deep_equal from "deep-equal";
 import clone from "clone";
-import promise from "bluebird";
+import Promise from "bluebird";
 
 const default_pagination = {
 	page: 1,
