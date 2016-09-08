@@ -19,4 +19,4 @@ The use of components is simple and declarative. Look at example below
 ```
 It renders list with pagination based on resources from url property. Every list item is represented by React class created by user (*MyReactClass* in that case).
 
-See our [Api reference](https://github.com/sealcode/sealious-react-components/blob/unit_tests/reference.md) to discover other components and how to use them.
+See our [Api reference](https://github.com/sealcode/sealious-react-components/blob/documentation/reference.md) to discover other components and how to use them.
