@@ -17,8 +17,8 @@ export default function SingleResource(ComponentClass){
 			return {
 				url: "",
 				onDeleteSuccess: () => {},
-			}
-		}
+			};
+		},
 		refresh: function(){
 			var self = this;
 			var url = this.props.url;
@@ -87,6 +87,7 @@ export default function SingleResource(ComponentClass){
 			return handlers;
 		},
 		render: function(){
+			console.log("render!");
 			if(this.state.loaded){
 				return React.createElement(ComponentClass, {
 					resource: this.state.resource,
@@ -94,9 +95,9 @@ export default function SingleResource(ComponentClass){
 					handlers: this.getAllHandlers(),
 					onSubmit: this.update,
 					onDelete: this.delete,
-				})
+				});
 			} else{
-				return (<div>Loading...</div>)
+				return (<div>Loading...</div>);
 			}
 
 		}
