@@ -58,7 +58,7 @@ const ResourceList = (props) => {
 	}else{
 		return(
 			<div>
-				{pagination}
+				empty!
 			</div>
 		)
 	}
