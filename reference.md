@@ -145,3 +145,24 @@ const DefaultRow = (props) => {
 	}
 }
 ```
+
+### resource-table props
+* ``` url ``` - necessary for GET request. Get resources from this adress. You have access to resource data by *props.resource*. Example
+```javascript
+url='http://example.com/api/resources/tasks'
+```
+* ``` paginate ``` - decides that the list has pagination or not. If is *false* or not defined, the list renders all resources. If is *true*, the list renders 12 elements by default. Example
+```javascript
+paginate={true}
+```
+* ``` itemsPerPage ``` - how many elements per page you want. The default is 12. Example
+```javascript
+itemsPerPage={8}
+```
+* ```rowComponent``` - how looks like single row in table
+```javascript
+rowComponent={MyReactClass}
+```
+* ```filter```
+* ```format```
+* ```search```
