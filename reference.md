@@ -116,7 +116,7 @@ import MyReactClass from './MyReactClass.jsx';
 
 ReactDOM.render(
   <ResourceTable
-    url='http://sealcode.org:8082/api/v1/resources/task'
+    url='http://example.com/api/resources/tasks'
     paginate={true}
     itemsPerPage={3}
   />,
@@ -166,3 +166,24 @@ rowComponent={MyReactClass}
 * ```filter```
 * ```format```
 * ```search```
+
+# SingleResource
+SingleResource is a mixin that allows you to display single resource, update it or delete.
+
+```javascript
+// App.jsx
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import {SingleResource} from 'react-sealious-components';
+import MyReactClass from './MyReactClass.jsx';
+
+const Single = SingleResource(MyReactClass);
+
+ReactDOM.render(
+  <Single url='http://example.com/api/resources/tasks/jch9vlefet'/>,
+  document.getElementById('app')
+);
+```
+You must pass your own React class as an argument of SingleResource function (higher order function). SingleResource mixin returns new React class that contains your React class but with special methods and props.
