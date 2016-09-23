@@ -101,3 +101,47 @@ className="my-class"
 ```
 If you click this button, you use DELETE request to url with resource ID. If you have access rights, this particular resource will be removed.
 Example requested adress looks like: ``` "http://example.com/api/resources/tasks/qdg231fsq" ```
+
+# resource-table
+Renders table with optional pagination. Full example of use below
+
+```javascript
+// App.jsx
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import {ResourceTable} from 'react-sealious-components';
+import MyReactClass from './MyReactClass.jsx';
+
+ReactDOM.render(
+  <ResourceTable
+    url='http://sealcode.org:8082/api/v1/resources/task'
+    paginate={true}
+    itemsPerPage={3}
+  />,
+  document.getElementById('app')
+);
+```
+
+### the default table row component
+ResourceTable renders a table. This is default row component but you can define your own React class or stateless function (recommended).
+
+```javascript
+const DefaultRow = (props) => {
+	try{
+		const body = props.resource.body;
+		const cells = Object.keys(body).map((key) => {
+			let content = body[key];
+			return (
+				<td key={key}>
+					{content}
+				</td>
+			)
+		});
+		return <tr key={props.resource.id}>{cells}</tr>
+	}catch(e){
+		console.log(e);
+	}
+}
+```
