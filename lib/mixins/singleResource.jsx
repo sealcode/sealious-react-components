@@ -4,7 +4,7 @@ import React from "react";
 
 import clone from "clone";
 
-export default function SingleResource(ComponentClass){
+export default function singleResource(ComponentClass){
 	return React.createClass({
 		getInitialState: function() {
 		    return {

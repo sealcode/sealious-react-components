@@ -1,5 +1,5 @@
 import React from "react";
-import ResourceTypeCollection from './mixins/ResourceTypeCollection.jsx';
+import resourceTypeCollection from './mixins/ResourceTypeCollection.jsx';
 import merge from "merge";
 
 const ResourceSelect = React.createClass({
@@ -49,4 +49,4 @@ const ResourceSelect = React.createClass({
 	}
 });
 
-export default ResourceTypeCollection(ResourceSelect);
+export default resourceTypeCollection(ResourceSelect);

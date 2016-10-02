@@ -10,7 +10,7 @@ const default_pagination = {
 	items: 12
 }
 
-export default function ResourceTypeCollection(ComponentClass){
+export default function resourceTypeCollection(ComponentClass){
 	return React.createClass({
 
 		getInitialState: function() {

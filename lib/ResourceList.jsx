@@ -1,5 +1,5 @@
-import ResourceTypeCollection from './mixins/ResourceTypeCollection.jsx';
+import resourceTypeCollection from './mixins/ResourceTypeCollection.jsx';
 
 import PureResourceList from './ResourceListPure.jsx';
 
-export default ResourceTypeCollection(PureResourceList);
+export default resourceTypeCollection(PureResourceList);

@@ -2,7 +2,7 @@ import React from "react";
 import rest from "qwest";
 import merge from "merge";
 import Pagination from "./Pagination.jsx";
-import ResourceTypeCollection from './mixins/ResourceTypeCollection.jsx';
+import resourceTypeCollection from './mixins/ResourceTypeCollection.jsx';
 
 const DefaultRow = (props) => {
 	try{
@@ -78,4 +78,4 @@ const ResourceTable = (props) => {
 
 }
 
-export default ResourceTypeCollection(ResourceTable);
+export default resourceTypeCollection(ResourceTable);
