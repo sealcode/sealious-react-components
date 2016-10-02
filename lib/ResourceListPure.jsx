@@ -41,7 +41,13 @@ const ResourceList = (props) => {
 	}
 	if(list_elements.length){
 		return (
-			<ResourceListPage containerComponent={merged_props.containerComponent} className={merged_props.className} paginate={props.paginate} paginationProps={pagination_props} listElements={list_elements} />
+			<ResourceListPage
+				containerComponent={merged_props.containerComponent}
+				className={merged_props.className}
+				paginate={props.paginate}
+				paginationProps={pagination_props}
+				listElements={list_elements}
+			/>
 		)
 	} else if(merged_props.emptyClass){
 		return (
