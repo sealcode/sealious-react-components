@@ -1,5 +1,5 @@
 import React from "react";
-import resourceTypeCollection from './mixins/ResourceTypeCollection.jsx';
+import resourceTypeCollection from './mixins/resourceTypeCollection.jsx';
 import merge from "merge";
 
 const ResourceSelect = React.createClass({
