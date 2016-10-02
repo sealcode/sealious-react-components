@@ -2,7 +2,7 @@ import React from "react";
 import rest from "qwest";
 import merge from "merge";
 import Pagination from "./Pagination.jsx";
-import resourceTypeCollection from './mixins/ResourceTypeCollection.jsx';
+import resourceTypeCollection from './mixins/resourceTypeCollection.jsx';
 
 const DefaultRow = (props) => {
 	try{

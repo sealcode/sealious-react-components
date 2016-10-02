@@ -1,4 +1,4 @@
-import resourceTypeCollection from './mixins/ResourceTypeCollection.jsx';
+import resourceTypeCollection from './mixins/resourceTypeCollection.jsx';
 
 import PureResourceList from './ResourceListPure.jsx';
 
