@@ -1,6 +1,6 @@
 import React from "react";
 
-const ResourceListPagination = React.createClass({
+const Pagination = React.createClass({
 	render: function(){
 
 		return (
@@ -25,4 +25,4 @@ const ResourceListPagination = React.createClass({
 	}
 })
 
-export default ResourceListPagination;
+export default Pagination;

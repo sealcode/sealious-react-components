@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ResourceTable from '../../lib/resource-table.jsx';
+import ResourceTable from '../../lib/ResourceTable.jsx';
 import ReactTableRow from './ReactTableRow.jsx';
 
 ReactDOM.render(

@@ -1,6 +1,6 @@
 import React from "react";
 import merge from "merge";
-import Pagination from "./resource-list-pagination.jsx";
+import Pagination from "./Pagination.jsx";
 
 export const default_props = {
 	containerComponent: "ul",

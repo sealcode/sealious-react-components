@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ResourceList from '../../lib/resource-list.jsx';
+import ResourceList from '../../lib/ResourceList.jsx';
 import ReactListElement from './ReactListElement.jsx';
 
 ReactDOM.render(

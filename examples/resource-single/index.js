@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import SingleResource from '../../lib/mixins/single-resource.jsx';
+import SingleResource from '../../lib/mixins/SingleResource.jsx';
 import ReactSingleResource from './ReactSingleResource.jsx';
 
 const Single = SingleResource(ReactSingleResource);
