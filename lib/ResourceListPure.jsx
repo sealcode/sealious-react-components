@@ -1,6 +1,7 @@
 import React from "react";
 import merge from "merge";
 import Pagination from "./Pagination.jsx";
+import ResourceListPage from "./ResourceListPage.jsx";
 
 export const default_props = {
 	containerComponent: "ul",
@@ -18,9 +19,7 @@ export const wrap = function(method, resource){
 
 const ResourceList = (props) => {
 
-
 	const merged_props = merge(default_props, props);
-
 
 	const list_elements = props.resources.map((resource) => {
 		return React.createElement(merged_props.listElementClass, {
@@ -42,11 +41,7 @@ const ResourceList = (props) => {
 	}
 	if(list_elements.length){
 		return (
-			<div className = {merged_props.className}>
-				{props.paginate ? React.createElement(Pagination, pagination_props) : null}
-				{React.createElement(merged_props.containerComponent, {className: "resource-list"}, list_elements)}
-				{props.paginate ? React.createElement(Pagination, pagination_props) : null}
-			</div>
+			<ResourceListPage containerComponent={merged_props.containerComponent} className={merged_props.className} paginate={props.paginate} paginationProps={pagination_props} listElements={list_elements} />
 		)
 	} else if(merged_props.emptyClass){
 		return (
@@ -58,7 +53,7 @@ const ResourceList = (props) => {
 	}else{
 		return(
 			<div>
-				empty!
+				{props.paginate ? React.createElement(Pagination, pagination_props) : null}
 			</div>
 		)
 	}
