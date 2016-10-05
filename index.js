@@ -3,9 +3,15 @@ import ResourceTable from './lib/ResourceTable.jsx';
 import ResourceSelect from './lib/ResourceSelect.jsx';
 import singleResource from './lib/mixins/singleResource.jsx';
 
-module.export = {
+// export default {
+//   ResourceList: ResourceList,
+//   ResourceTable: ResourceTable,
+//   ResourceSelect: ResourceSelect,
+//   singleResource: singleResource,
+// }
+module.exports = {
   ResourceList: ResourceList,
   ResourceTable: ResourceTable,
   ResourceSelect: ResourceSelect,
-  singleResource: singleResource,
-}
+  singleResource: singleResource
+};

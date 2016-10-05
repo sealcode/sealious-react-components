@@ -3,10 +3,16 @@ import merge from "merge";
 import Pagination from "./Pagination.jsx";
 import ResourceListPage from "./ResourceListPage.jsx";
 
+const DefaultListItem = (props) => {
+	return (
+		<li>{props.resource.body.title}</li>
+	);
+}
+
 export const default_props = {
 	containerComponent: "ul",
 	className: "",
-	listElementClass: "li",
+	listElementClass: DefaultListItem,
 }
 
 export const wrap = function(method, resource){
@@ -20,6 +26,11 @@ export const wrap = function(method, resource){
 const ResourceList = (props) => {
 
 	const merged_props = merge(default_props, props);
+	//const merged_props = Object.assign(default_props, props)
+	console.log("Props:",props);
+
+
+	console.log("Merged props", merged_props)
 
 	const list_elements = props.resources.map((resource) => {
 		return React.createElement(merged_props.listElementClass, {
