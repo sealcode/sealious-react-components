@@ -89,20 +89,21 @@ export default function singleResource(ComponentClass){
 		render: function(){
 			console.log("render!");
 			if(this.state.loaded){
-				return React.createElement(ComponentClass, {
-					resource: this.state.resource,
-					body: this.state.temp_body,
-					handlers: this.getAllHandlers(),
-					onSubmit: this.update,
-					onDelete: this.delete,
-				});
+				try{
+					return React.createElement(ComponentClass, {
+						resource: this.state.resource,
+						body: this.state.temp_body,
+						handlers: this.getAllHandlers(),
+						onSubmit: this.update,
+						onDelete: this.delete,
+					});
+				}catch(error){
+					console.log(error);
+				}
 			} else{
 				return (<div>Loading...</div>);
 			}
-
 		}
-
-
 	});
 }
 

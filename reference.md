@@ -66,30 +66,46 @@ We highly recommend to use staless function instead of Reac.createClass for rend
 *MyReactClass* creates *li* tag with *span* and *button* inside. Span displays title of single resource and button has special method for removing this single resource. Its very usefull for building CMS-like structures with CRUD operations. You have asccess to resource by *props.resource*
 
 ### resource-list props
-* ``` url ``` - necessary for GET request. Get resources from this adress. You have access to resource data by *props.resource*. Example
+* ` url` - necessary for GET request. Get resources from this adress. You have access to resource data by *props.resource*. Example
+
 ```javascript
 url='http://example.com/api/resources/tasks'
 ```
-* ``` paginate ``` - decides that the list has pagination or not. If is *false* or not defined, the list renders all resources. If is *true*, the list renders 12 elements by default. Example
+
+* `paginate` - decides that the list has pagination or not. If is *false* or not defined, the list renders all resources. If is *true*, the list renders 12 elements by default. Example:
 ```javascript
 paginate={true}
 ```
-* ``` itemsPerPage ``` - how many elements per page you want. The default is 12. Example
+
+* `itemsPerPage` - how many elements per page you want. The default is 12. Example:
+
 ```javascript
 itemsPerPage={8}
 ```
-* ``` listElementClass ``` - you should set your own list element with your own React class. The default element is *li*. Example
+
+* `listElementClass` - you should set your own list element with your own React class. The default element is *li*. Example:
+
 ```javascript
 listElementClass={MyReactClass}
 ```
-* ``` containerComponent ``` - set your own container component. The default is *ul*. Example
+* `containerComponent` - set your own container component. The default is *ul*. Example:
+
 ```javascript
 containerComponent="div"
 ```
-* ``` className ``` - the class name of the div container. Example
+
+* `className` - the class name of the div container. Example:
+
 ```javascript
 className="my-class"
 ```
+
+* `preprocessEach` - a function that can modify the objects representing the elements of the collection before they're being displayed. Example:
+
+```javascript
+preprocessEach={(e)=>e.body.friends}
+```
+
 * ```filter```
 * ```format```
 * ```search```

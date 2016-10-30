@@ -13,7 +13,8 @@ export const default_props = {
 	containerComponent: "ul",
 	className: "",
 	listElementClass: DefaultListItem,
-}
+	preprocessEach: e => e,
+};
 
 export const wrap = function(method, resource){
 	if(method==undefined){
@@ -27,14 +28,10 @@ const ResourceList = (props) => {
 
 	const merged_props = merge(default_props, props);
 	//const merged_props = Object.assign(default_props, props)
-	console.log("Props:",props);
-
-
-	console.log("Merged props", merged_props)
 
 	const list_elements = props.resources.map((resource) => {
 		return React.createElement(merged_props.listElementClass, {
-			resource: resource,
+			resource: merged_props.preprocessEach(resource),
 			key: resource.id,
 			onDelete: wrap(merged_props.delete, resource),
 			afterChange: merged_props.refresh
