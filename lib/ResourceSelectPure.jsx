@@ -7,7 +7,7 @@ const default_props = {
 	valueAttr: "id",
 	noValueOptionName: "--",
 	allowNoValue: false,
-	onValueChange: (resource) => alert(resource.id),
+	onValueChange: (value) => alert(value),
 	label: "Select resource:",
 	disabled: false,
 	value: "",
@@ -19,7 +19,7 @@ function ResourceSelectPure(props_arg){
 	const props = merge(true, default_props, props_arg);
 
 	function handleChange(e){
-		console.log(e);
+		props.onValueChange(e.target.value);
 	}
 	
 	try{
