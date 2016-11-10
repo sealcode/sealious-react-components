@@ -3,6 +3,7 @@ import ResourceTable from './lib/ResourceTable.jsx';
 import ResourceSelect from './lib/ResourceSelect.jsx';
 import singleResource from './lib/mixins/singleResource.jsx';
 const login = require("./lib/mixins/login.jsx");
+const form = require("./lib/mixins/form.js");
 
 // export default {
 //   ResourceList: ResourceList,
@@ -16,4 +17,5 @@ module.exports = {
   ResourceSelect: ResourceSelect,
   singleResource: singleResource,
   login: login,
+  form: form
 };
