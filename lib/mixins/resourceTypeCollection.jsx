@@ -27,6 +27,7 @@ export default function resourceTypeCollection(ComponentClass){
 		        filter: {},
 		        format: {},
 		        search: "",
+				url: "/api/v1/resources/users",
 		    };
 		},
 		generateQuery: function(props){
@@ -87,17 +88,15 @@ export default function resourceTypeCollection(ComponentClass){
 					loading: false,
 					resources: response,
 					last_query: clone(query)
-				})
-			})
+				});
+			});
 		},
 		refresh: function(force){
 			let query = this.generateQuery(this.props);
 			if(this.paginationResetNeeded(query)){
-				console.log("pagination reset needed!");
 				this.resetPagination(() => {
-					console.log("pagination has been reset!");
 					this.fetch(query);
-				})
+				});
 				return;
 			}
 			if(force || this.reloadNeeded(query)){
@@ -112,13 +111,13 @@ export default function resourceTypeCollection(ComponentClass){
 		componentWillReceiveProps: function(next_props) {
 			setTimeout(() => {
 				this.refresh();
-			}, 0)
+			}, 0);
 		},
 		delete: function(resource){
 			rest.delete(this.props.url + "/" + resource.id, {}, {cache: true})
 			.then(() => {
 				this.refresh(true);
-			})
+			});
 		},
 		nextPage: function(){
 			this.setState({

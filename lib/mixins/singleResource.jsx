@@ -29,7 +29,6 @@ export default function singleResource(ComponentClass){
 				query.format = this.getFormat();
 			}
 
-			console.log(url)
 			rest.get(url, query, {responseType: "json", cache: true})
 			.then(function(xml, data){
 				self.setState({
@@ -48,7 +47,6 @@ export default function singleResource(ComponentClass){
 		update: function(e){
 			e && e.preventDefault();
 			var temp_body = clone(this.state.temp_body);
-			console.log(temp_body);
 			for(var i in temp_body){
 				var ignored_fields = this.state.ignoreFieldUpdate || (this.static && this.static.ignoreFieldUpdate);
 				var is_ignored = ignored_fields && ignored_fields.indexOf(i)!==-1
@@ -87,7 +85,6 @@ export default function singleResource(ComponentClass){
 			return handlers;
 		},
 		render: function(){
-			console.log("render!");
 			if(this.state.loaded){
 				try{
 					return React.createElement(ComponentClass, {
