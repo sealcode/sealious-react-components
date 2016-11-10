@@ -141,7 +141,7 @@ export default function resourceTypeCollection(ComponentClass){
 				refresh: this.refresh,
 				nextPage: this.nextPage,
 				prevPage: this.prevPage
-			}
+			};
 
 			return <ComponentClass {...this.props} {...customProps} />
 		}

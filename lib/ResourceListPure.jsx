@@ -13,7 +13,7 @@ export const default_props = {
 	containerComponent: "ul",
 	className: "",
 	listElementClass: DefaultListItem,
-	preprocessEach: e => e,
+	preprocessEach: (e) => e,
 };
 
 export const wrap = function(method, resource){
@@ -26,7 +26,7 @@ export const wrap = function(method, resource){
 
 const ResourceList = (props) => {
 
-	const merged_props = merge(default_props, props);
+	const merged_props = merge(true, default_props, props);
 	//const merged_props = Object.assign(default_props, props)
 
 	const list_elements = props.resources.map((resource) => {
