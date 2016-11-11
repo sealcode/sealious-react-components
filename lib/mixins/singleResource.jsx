@@ -67,7 +67,18 @@ export default function singleResource(ComponentClass){
 		componentDidMount: function(){
 			this.refresh();
 		},
+		getCleanUrl: function(){
+			// returns the URL without query params
+			let parsed_url;
+			try{
+				parsed_url = new URL(this.props.url);
+			}catch(e){
+				parsed_url = new URL(document.location.origin + this.props.url);
+			}
+			return parsed_url.origin + parsed_url.pathname;
+		},
 		update: function(e){
+			const self = this;
 			e && e.preventDefault();
 			var temp_body = clone(this.state.temp_body);
 			for(var i in temp_body){
@@ -77,7 +88,7 @@ export default function singleResource(ComponentClass){
 					delete temp_body[i];
 				}
 			}
-			var url = this.props.url;
+			var url = self.getCleanUrl();
 			return rest.map("patch", url, temp_body, {cache: true});
 		},
 		delete: function(){
