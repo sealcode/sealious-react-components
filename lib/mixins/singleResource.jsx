@@ -10,7 +10,8 @@ export default function singleResource(ComponentClass){
 		    return {
 		          loaded: false,
 		          resource: null,
-		          temp_body: {}
+		          temp_body: {},
+				  specification: {},
 		    };
 		},
 		getDefaultProps: function(){
@@ -18,6 +19,13 @@ export default function singleResource(ComponentClass){
 				url: "",
 				onDeleteSuccess: () => {},
 			};
+		},
+		getTempBody: function(specification, resource){
+			const temp_body = {};
+			for(var field_name in specification.fields){
+				temp_body[field_name] = resource.body[field_name] || "";
+			}
+			return temp_body;
 		},
 		refresh: function(){
 			var self = this;
@@ -29,12 +37,27 @@ export default function singleResource(ComponentClass){
 				query.format = this.getFormat();
 			}
 
+			let resource = null;
+
 			rest.get(url, query, {responseType: "json", cache: true})
 			.then(function(xml, data){
+				resource = data;
+				let parsed_url = null;
+				try {
+					parsed_url = new URL(url);
+				}catch(e){
+					parsed_url = new URL(document.location.origin + url);
+				}
+				const collection_name = parsed_url.pathname.split("/").slice(-2)[0];
+				return rest.get("/api/v1/specifications/" + collection_name);
+			})
+			.then(function(xml, data){
+				const specification = data;
 				self.setState({
+					specification: specification,
 					loaded: true,
-					resource: data,
-					temp_body: clone(data.body)
+					resource: resource,
+					temp_body: self.getTempBody(specification, resource),
 				});
 				if(self.onDataReceive){
 					self.onDataReceive();
@@ -49,20 +72,20 @@ export default function singleResource(ComponentClass){
 			var temp_body = clone(this.state.temp_body);
 			for(var i in temp_body){
 				var ignored_fields = this.state.ignoreFieldUpdate || (this.static && this.static.ignoreFieldUpdate);
-				var is_ignored = ignored_fields && ignored_fields.indexOf(i)!==-1
+				var is_ignored = ignored_fields && ignored_fields.indexOf(i)!==-1;
 				if(temp_body[i]=="" || temp_body[i] === null || is_ignored || temp_body[i]=="undefined" || temp_body[i]===undefined){
 					delete temp_body[i];
 				}
 			}
 			var url = this.props.url;
-			return rest.map("patch", url, temp_body, {cache: true})
+			return rest.map("patch", url, temp_body, {cache: true});
 		},
 		delete: function(){
 			rest.delete(this.props.url, {}, {cache: true})
 			.then(() => {
 				this.props.onDeleteSuccess();
 				this.refresh(true);
-			})
+			});
 		},
 		getFieldChangeHandler: function(field_name){
 			var self = this;
@@ -75,7 +98,7 @@ export default function singleResource(ComponentClass){
 					temp_body[field_name] = e;
 				}
 				self.setState({temp_body: temp_body});
-			}
+			};
 		},
 		getAllHandlers: function(){
 			const handlers = {};
@@ -100,7 +123,7 @@ export default function singleResource(ComponentClass){
 			} else{
 				return (<div>Loading...</div>);
 			}
-		}
+		},
 	});
 }
 
