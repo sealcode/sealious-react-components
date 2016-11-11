@@ -1,28 +1,31 @@
-import React from "react";
+const React = require("react");
 
-const Pagination = React.createClass({
-	render: function(){
-
+const Pagination = function(props){
+	try{
 		return (
 			<ul className="resource-list-pagination">
 				<li
 					className="btn"
-					style={{visibility: this.props.hasPrev? "visible" : "hidden"}}
-					onClick={this.props.onPrev}
+					style={{visibility: props.hasPrev? "visible" : "hidden"}}
 				>
-					&#x25C0; poprzednie
+					<a href={props.prevPageUrl} onClick={props.onPrev}>
+						&#x25C0; poprzednie
+					</a>
 				</li>
 
 				<li
 					className="btn"
-					style={{visibility: this.props.hasNext? "visible" : "hidden"}}
-					onClick={this.props.onNext}
+					style={{visibility: props.hasNext? "visible" : "hidden"}}
 				>
-					następne &#x25B6;
+					<a href={props.nextPageUrl} onClick={props.onNext}>
+						następne &#x25B6;
+					</a>
 				</li>
 			</ul>
 		);
+	}catch(e){
+		console.error(e);
 	}
-})
+};
 
-export default Pagination;
+module.exports = Pagination;

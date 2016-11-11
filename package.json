@@ -33,12 +33,13 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "babelify": "^7.3.0",
     "bluebird": "^3.4.1",
     "clone": "^1.0.2",
     "deep-equal": "^1.0.1",
     "merge": "^1.2.0",
     "qwest": "^4.4.4",
-    "babelify": "^7.3.0"
+    "url": "^0.11.0"
   },
   "browserify": {
     "transform": [

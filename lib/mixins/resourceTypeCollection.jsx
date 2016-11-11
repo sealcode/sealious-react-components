@@ -5,78 +5,44 @@ import deep_equal from "deep-equal";
 import clone from "clone";
 import Promise from "bluebird";
 
-const default_pagination = {
-	page: 1,
-	items: 12
-}
-
 export default function resourceTypeCollection(ComponentClass){
 	return React.createClass({
-
-		getInitialState: function() {
-		    return {
-		        resources: [],
-		        last_loaded: -Infinity,
-		        last_query: {},
-						pagination: (this.props.itemsPerPage != null ? {page:1, items: this.props.itemsPerPage} : clone(default_pagination)),
-		    };
+		getInitialState: function(){
+			return {
+				loading: false,
+				resources: [],
+			};
 		},
-		getDefaultProps: function() {
-		    return {
-		        paginate: false,
-		        filter: {},
-		        format: {},
-		        search: "",
-				url: "/api/v1/resources/users",
-		    };
+		getDefaultProps: function(){
+			return {
+				pagination: undefined, // could be: {page: 1, items: 12}
+				filter: {},
+				format: {},
+				search: "",
+				url: "/api/v1/collections/users",
+				loadingComponent: () => React.createElement("div", {}, "Loading..."),
+			};
 		},
 		generateQuery: function(props){
-
 			let query = {};
-
-			if(props.paginate){
-				query.pagination = this.state.pagination;
-			}
-			if(props.search){
-				query.search = props.search;
-			}
 			if(props.filter){
 				query.filter = props.filter;
 				for(let i in query.filter){
 					if(query.filter[i]=="undefined" || query.filter[i]===null){
-						delete query.filter
+						delete query.filter;
 					}
 				}
 			}
-			if(props.sort){
-				query.sort = props.sort;
-			}
-			if(props.format){
-				query.format = props.format;
-			}
-
+			const to_add = ["sort", "format", "search", "pagination"];
+			to_add.forEach(function(key){
+				if(props[key]){
+					query[key] = props[key];
+				}
+			});
 			return query;
 		},
 		reloadNeeded: function(query){
 			return !deep_equal(query, this.state.last_query);
-		},
-		paginationResetNeeded: function(query){
-			if(deep_equal(query.pagination, default_pagination)){
-				return false;
-			}
-			for(let attr in query){
-				if(attr != "pagination"){
-					if(!deep_equal(query[attr], this.state.last_query[attr])){
-						return true;
-					}
-				}
-			}
-			return false;
-		},
-		resetPagination: function(cb){
-			this.setState({
-				pagination: (this.props.itemsPerPage != null ? {page:1, items: this.props.itemsPerPage} : clone(default_pagination))
-			}, cb)
 		},
 		fetch: function(query){
 			this.setState({
@@ -93,17 +59,7 @@ export default function resourceTypeCollection(ComponentClass){
 		},
 		refresh: function(force){
 			let query = this.generateQuery(this.props);
-			if(this.paginationResetNeeded(query)){
-				this.resetPagination(() => {
-					this.fetch(query);
-				});
-				return;
-			}
-			if(force || this.reloadNeeded(query)){
-				return this.fetch(query);
-			}else{
-				return Promise.resolve();
-			}
+			this.fetch(query);
 		},
 		componentDidMount: function(){
 			this.refresh();
@@ -119,30 +75,22 @@ export default function resourceTypeCollection(ComponentClass){
 				this.refresh(true);
 			});
 		},
-		nextPage: function(){
-			this.setState({
-				pagination: merge(this.state.pagination, {page: this.state.pagination.page + 1})
-			});
-			this.refresh();
-		},
-		prevPage: function(){
-			this.setState({
-				pagination: merge(this.state.pagination, {page: this.state.pagination.page - 1})
-			});
-			this.refresh();
-		},
 		render: function(){
+			if(this.state.loading){
+				return React.createElement(this.props.loadingComponent);
+			}
 			const customProps = {
 				resources: this.state.resources,
-				pagination: this.state.pagination,
 				loading: this.state.loading,
 				delete: this.delete,
-				refresh: this.refresh,
-				nextPage: this.nextPage,
-				prevPage: this.prevPage
 			};
+			
+			const child_props = merge(true, this.props, customProps);
 
-			return <ComponentClass {...this.props} {...customProps} />
+			return React.createElement(
+				ComponentClass,
+				child_props
+			);
 		}
 	});
 }

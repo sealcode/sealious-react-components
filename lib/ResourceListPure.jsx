@@ -52,7 +52,7 @@ const ResourceList = (props) => {
 			<ResourceListPage
 				containerComponent={merged_props.containerComponent}
 				className={merged_props.className}
-				paginate={props.paginate}
+				paginate={merged_props.paginate}
 				paginationProps={pagination_props}
 				listElements={list_elements}
 			/>
