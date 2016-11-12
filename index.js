@@ -25,5 +25,5 @@ module.exports = {
   loadPageNumberFromLocation: require("./lib/mixins/load-page-number-from-location.js"),
   keepPageNumberInState: require("./lib/mixins/keep-page-number-in-state.js"),
   RouterLink: require("./lib/RouterLink.js"),
-  propsFromUrl: require("./lib/mixins/propsFromUrl.js"), 
+  propsFromUrl: require("./lib/mixins/props-from-url.js"), 
 };
