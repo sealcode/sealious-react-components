@@ -22,8 +22,12 @@ module.exports = {
   paginate: paginate,
   PagedResourceList: paginate(ResourceList),
   Router: require("./lib/Router.js"),
-  loadPageNumberFromProps: require("./lib/mixins/load-page-number-from-props.js"),
+  keepPageNumberInUrl: require("./lib/mixins/keep-page-number-in-url.js"),
   keepPageNumberInState: require("./lib/mixins/keep-page-number-in-state.js"),
   RouterLink: require("./lib/RouterLink.js"),
   propsFromUrl: require("./lib/mixins/props-from-url.js"), 
+  CachedHttp: require("./lib/cached-http.js"),
+  loadCollectionSpecification: require("./lib/mixins/load-collection-specification.js"),
+  StatefulCollection: require("./lib/stateful-collection.js"),
+  PaginationUI: require("./lib/pagination-ui.jsx"),
 };

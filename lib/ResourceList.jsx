@@ -1,5 +1,5 @@
 const React = require("react");
-const resourceTypeCollection = require('./mixins/resourceTypeCollection.jsx').default;
+//const resourceTypeCollection = require('./mixins/resourceTypeCollection.jsx').default;
 
 const merge = require("merge");
 
@@ -20,15 +20,15 @@ const wrap = function(method, resource){
 	}
 };
 
-const PureResourceList = function(custom_props){
+const PureResourceList = function(containerClass, listElementClass, custom_props){
+	try{
 	const props = merge(true, default_props, custom_props);
 	const resources = props.resources;
-	const componentClass = props.listElementClass;
 
 	const list_elements = resources.map(
 		function(resource, index){
 			return React.createElement(
-				componentClass,
+				listElementClass,
 				{
 					resource: props.preprocessEach(resource),
 					key: resource.id,
@@ -40,9 +40,13 @@ const PureResourceList = function(custom_props){
 		}
 	);
 
+	if(props.loading){
+		return React.createElement("div", {}, "loading...");
+	}
+
 	if(resources.length){
 		return React.createElement(
-			props.containerComponent,
+			containerClass,
 			{className: "resource-list"},
 			list_elements
 		);
@@ -51,7 +55,12 @@ const PureResourceList = function(custom_props){
 			props.emptyClass
 		);
 	}
+	}catch(error){console.error(error)}
 };
 
 
-module.exports = resourceTypeCollection(PureResourceList);
+module.exports = function(containerClass, listElementClass){
+	return function(props){
+		return PureResourceList(containerClass, listElementClass, props);
+	};
+};

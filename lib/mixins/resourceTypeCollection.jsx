@@ -5,6 +5,8 @@ import deep_equal from "deep-equal";
 import clone from "clone";
 import Promise from "bluebird";
 
+const CachedHttp = require("../cached-http.js");
+
 export default function resourceTypeCollection(ComponentClass){
 	return React.createClass({
 		getInitialState: function(){
@@ -48,8 +50,8 @@ export default function resourceTypeCollection(ComponentClass){
 			this.setState({
 				loading: true
 			});
-			return rest.get(this.props.url, query, {cache: true})
-			.then((xml, response) => {
+			return CachedHttp.get(this.props.url, query, {cache: true})
+			.then((response) => {
 				this.setState({
 					loading: false,
 					resources: response,
