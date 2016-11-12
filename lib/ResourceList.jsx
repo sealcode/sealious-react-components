@@ -26,7 +26,7 @@ const PureResourceList = function(custom_props){
 	const componentClass = props.listElementClass;
 
 	const list_elements = resources.map(
-		function(resource){
+		function(resource, index){
 			return React.createElement(
 				componentClass,
 				{
@@ -34,6 +34,7 @@ const PureResourceList = function(custom_props){
 					key: resource.id,
 					onDelete: wrap(props.delete, resource),
 					afterChange: props.refresh,
+					index: index
 				}
 			);
 		}
