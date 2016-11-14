@@ -85,8 +85,8 @@ module.exports =  function singleResource(ComponentClass){
 			for(var i in temp_body){
 				if(
 					self.props.ignoredFields.indexOf(i) !== -1 ||
-					temp_body[i]=="" ||
-					temp_body[i] === null ||
+					temp_body[i]==="" ||
+					temp_body[i]===null ||
 					temp_body[i]=="undefined" ||
 					temp_body[i]===undefined
 				){
