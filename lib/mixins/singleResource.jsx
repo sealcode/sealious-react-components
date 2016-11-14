@@ -26,7 +26,6 @@ module.exports =  function singleResource(ComponentClass){
 			for(var field_name in specification.fields){
 				temp_body[field_name] = resource.body[field_name] || "";
 			}
-			console.log("temp_booty", temp_body);
 			return temp_body;
 		},
 		refresh: function(){
@@ -84,8 +83,6 @@ module.exports =  function singleResource(ComponentClass){
 			e && e.preventDefault();
 			var temp_body = clone(this.state.temp_body);
 			for(var i in temp_body){
-				console.log(self.props);
-				console.log(self.props.ignoredFields, i, self.props.ignoredFields.indexOf(i) !== -1);
 				if(
 					self.props.ignoredFields.indexOf(i) !== -1 ||
 					temp_body[i]=="" ||
@@ -127,7 +124,6 @@ module.exports =  function singleResource(ComponentClass){
 			return handlers;
 		},
 		render: function(){
-			console.log(this.props);
 			if(this.state.loaded){
 				try{
 					return React.createElement(ComponentClass, {
