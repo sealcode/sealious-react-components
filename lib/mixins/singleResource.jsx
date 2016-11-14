@@ -18,6 +18,7 @@ module.exports =  function singleResource(ComponentClass){
 			return {
 				url: "",
 				onDeleteSuccess: () => {},
+				ignoredFields: [],
 			};
 		},
 		getTempBody: function(specification, resource){
@@ -25,6 +26,7 @@ module.exports =  function singleResource(ComponentClass){
 			for(var field_name in specification.fields){
 				temp_body[field_name] = resource.body[field_name] || "";
 			}
+			console.log("temp_booty", temp_body);
 			return temp_body;
 		},
 		refresh: function(){
@@ -82,9 +84,15 @@ module.exports =  function singleResource(ComponentClass){
 			e && e.preventDefault();
 			var temp_body = clone(this.state.temp_body);
 			for(var i in temp_body){
-				var ignored_fields = this.state.ignoreFieldUpdate || (this.static && this.static.ignoreFieldUpdate);
-				var is_ignored = ignored_fields && ignored_fields.indexOf(i)!==-1;
-				if(temp_body[i]=="" || temp_body[i] === null || is_ignored || temp_body[i]=="undefined" || temp_body[i]===undefined){
+				console.log(self.props);
+				console.log(self.props.ignoredFields, i, self.props.ignoredFields.indexOf(i) !== -1);
+				if(
+					self.props.ignoredFields.indexOf(i) !== -1 ||
+					temp_body[i]=="" ||
+					temp_body[i] === null ||
+					temp_body[i]=="undefined" ||
+					temp_body[i]===undefined
+				){
 					delete temp_body[i];
 				}
 			}
@@ -119,6 +127,7 @@ module.exports =  function singleResource(ComponentClass){
 			return handlers;
 		},
 		render: function(){
+			console.log(this.props);
 			if(this.state.loaded){
 				try{
 					return React.createElement(ComponentClass, {

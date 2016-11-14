@@ -86,7 +86,7 @@ export default function resourceTypeCollection(ComponentClass){
 				loading: this.state.loading,
 				delete: this.delete,
 			};
-			
+
 			const child_props = merge(true, this.props, customProps);
 
 			return React.createElement(

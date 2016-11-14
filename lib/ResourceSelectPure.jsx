@@ -21,7 +21,7 @@ function ResourceSelectPure(props_arg){
 	function handleChange(e){
 		props.onValueChange(e.target.value);
 	}
-	
+
 	try{
 		const options = props.resources.map((resource) => {
 			const value = resource[props.valueAttr] || resource.body[props.valueAttr];
@@ -29,7 +29,7 @@ function ResourceSelectPure(props_arg){
 			const key = resource.id;
 			return (
 				<option value={value} key={key}>
-				  {name}
+					{name}
 				</option>
 			);
 		});
@@ -37,17 +37,17 @@ function ResourceSelectPure(props_arg){
 		if(props.allowNoValue){
 			options.unshift(
 				<option value="undefined" key="empty">
-				  {props.noValueOptionName}
+					{props.noValueOptionName}
 				</option>
 			);
 		}
 
 		return (
 			<label>
-			  {props.label}
-			  <select onChange={handleChange} value={props.value} disabled={props.disabled}>
-				{options}
-			  </select>
+				{props.label}
+				<select onChange={handleChange} value={props.value} disabled={props.disabled}>
+					{options}
+				</select>
 			</label>
 		);
 	}catch(e){
