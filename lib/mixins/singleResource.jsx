@@ -93,6 +93,7 @@ module.exports =  function singleResource(ComponentClass){
 					delete temp_body[i];
 				}
 			}
+			console.log(temp_body);
 			var url = self.getCleanUrl();
 			return rest.map("patch", url, temp_body, {cache: true});
 		},
