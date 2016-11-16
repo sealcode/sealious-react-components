@@ -1,6 +1,6 @@
-import rest from "qwest";
-import React from "react";
+const React = require("react");
 // rest.setDefaultDataType('formdata');
+const CachedHttp = require("../cached-http.js");
 
 import clone from "clone";
 
@@ -40,8 +40,8 @@ module.exports =  function singleResource(ComponentClass){
 
 			let resource = null;
 
-			rest.get(url, query, {responseType: "json", cache: true})
-			.then(function(xml, data){
+			CachedHttp.get(url, query, {responseType: "json", cache: true})
+			.then(function(data){
 				resource = data;
 				let parsed_url = null;
 				try {
@@ -50,9 +50,9 @@ module.exports =  function singleResource(ComponentClass){
 					parsed_url = new URL(document.location.origin + url);
 				}
 				const collection_name = parsed_url.pathname.split("/").slice(-2)[0];
-				return rest.get("/api/v1/specifications/" + collection_name);
+				return CachedHttp.get("/api/v1/specifications/" + collection_name);
 			})
-			.then(function(xml, data){
+			.then(function(data){
 				const specification = data;
 				self.setState({
 					specification: specification,
