@@ -27,7 +27,7 @@
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.4",
     "mocha": "^3.0.1",
-    "react": "^15.2.1",
+    "react": "^15.4.1",
     "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.2.1",
     "watchify": "^3.7.0"
@@ -39,6 +39,7 @@
     "deep-equal": "^1.0.1",
     "merge": "^1.2.0",
     "qwest": "^4.4.4",
+    "react": "^15.4.1",
     "url": "^0.11.0"
   },
   "browserify": {
