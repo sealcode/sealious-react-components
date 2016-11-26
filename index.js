@@ -1,11 +1,14 @@
+const paginate = require("./lib/mixins/paginate.js");
+const ResourceList = require('./lib/ResourceList.jsx');
+
 module.exports = {
-  ResourceList: require('./lib/ResourceList.jsx'),
+  ResourceList: ResourceList,
+  paginate: paginate,
   ResourceTable: require('./lib/ResourceTable.jsx'),
   ResourceSelect: require('./lib/ResourceSelect.jsx'),
   singleResource: require('./lib/mixins/singleResource.jsx'),
   login: require("./lib/mixins/login.jsx"),
   form: require("./lib/mixins/form.js"),
-  paginate: require("./lib/mixins/paginate.js"),
   PagedResourceList: paginate(ResourceList),
   Router: require("./lib/Router.js"),
   keepPageNumberInUrl: require("./lib/mixins/keep-page-number-in-url.js"),
