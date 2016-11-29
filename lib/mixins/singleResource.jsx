@@ -29,6 +29,11 @@ module.exports =  function singleResource(ComponentClass){
 			}
 			return temp_body;
 		},
+		componentWillReceiveProps: function(next_props) {
+			setTimeout(() => {
+				this.refresh();
+			}, 0);
+		},
 		refresh: function(){
 			var self = this;
 			var url = this.props.url;
