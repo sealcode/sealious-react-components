@@ -55,12 +55,17 @@ module.exports =  function singleResource(ComponentClass){
 			})
 			.then(function(data){
 				const specification = data;
-				self.setState({
-					specification: specification,
-					loaded: true,
-					resource: resource,
-					temp_body: self.getTempBody(specification, resource),
-				});
+				try{
+					self.setState({
+						specification: specification,
+						loaded: true,
+						resource: resource,
+						temp_body: self.getTempBody(specification, resource),
+					});
+				}catch(e){
+					//sometimes when using qwest and certain type of components React swallows the error. We catch it here so it can be easilly accessed. See https://github.com/facebook/react/issues/8430 for bug status
+					console.error(e);
+				}
 				if(self.onDataReceive){
 					self.onDataReceive();
 				}
