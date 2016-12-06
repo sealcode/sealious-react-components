@@ -5,6 +5,7 @@ import deep_equal from "deep-equal";
 import clone from "clone";
 import Promise from "bluebird";
 
+const Loading = require("./../loading.js");
 const CachedHttp = require("../cached-http.js");
 
 export default function resourceTypeCollection(ComponentClass){
@@ -22,7 +23,7 @@ export default function resourceTypeCollection(ComponentClass){
 				format: {},
 				search: "",
 				url: "/api/v1/collections/users",
-				loadingComponent: () => React.createElement("div", {}, "Loading..."),
+				loadingComponent: () => React.createElement(Loading),
 			};
 		},
 		generateQuery: function(props){

@@ -2,6 +2,7 @@ const React = require("react");
 // rest.setDefaultDataType('formdata');
 const rest = require("qwest");
 const CachedHttp = require("../cached-http.js");
+const Loading = require("./../loading.js");
 
 import clone from "clone";
 
@@ -148,7 +149,7 @@ module.exports =  function singleResource(ComponentClass){
 					console.log(error);
 				}
 			} else{
-				return (<div>Loading...</div>);
+				return React.createElement(Loading);
 			}
 		},
 	});

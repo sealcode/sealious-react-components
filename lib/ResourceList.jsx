@@ -2,6 +2,7 @@ const React = require("react");
 //const resourceTypeCollection = require('./mixins/resourceTypeCollection.jsx').default;
 
 const merge = require("merge");
+const Loading = require("./loading.js");
 
 const default_props = {
 	paginate: true,
@@ -41,7 +42,7 @@ const PureResourceList = function(containerClass, listElementClass, custom_props
 	);
 
 	if(props.loading){
-		return React.createElement("div", {}, "loading...");
+		return React.createElement(Loading);
 	}
 
 	if(resources.length){

@@ -19,5 +19,6 @@ module.exports = {
   loadCollectionSpecification: require("./lib/mixins/load-collection-specification.js"),
   StatefulCollection: require("./lib/stateful-collection.js"),
   PaginationUI: require("./lib/pagination-ui.jsx"),
-  PropMultiplexer: require("./lib/prop-multiplexer.js")
+  PropMultiplexer: require("./lib/prop-multiplexer.js"),
+  Loading: require("./lib/loading.js"),
 };
