@@ -3,10 +3,15 @@ const React = require("react");
 const rest = require("qwest");
 const CachedHttp = require("../cached-http.js");
 const Loading = require("./../loading.js");
+const SimpleError = require("./../simple-error.jsx");
+
 
 import clone from "clone";
 
-module.exports =  function singleResource(ComponentClass){
+module.exports =  function singleResource(ComponentClass, ErrorClass){
+
+	if(!ErrorClass) ErrorClass = SimpleError;
+
 	return React.createClass({
 		getInitialState: function() {
 		    return {
@@ -75,6 +80,17 @@ module.exports =  function singleResource(ComponentClass){
 				if(self.onDataReceive){
 					self.onDataReceive();
 				}
+			})
+			.catch(function(e, xml, error_data){
+				try{
+					console.error("ERROR!", e);
+					self.setState({
+						error: true,
+						error_data: error_data,
+					});
+				}catch(e){
+					console.error(e);
+				}
 			});
 		},
 		componentDidMount: function(){
@@ -136,6 +152,14 @@ module.exports =  function singleResource(ComponentClass){
 			return handlers;
 		},
 		render: function(){
+			if(this.state.error){
+				return React.createElement(
+					ErrorClass,
+					{
+						error_data: this.state.error_data
+					}
+				);
+			}
 			if(this.state.loaded){
 				try{
 					return React.createElement(ComponentClass, {
