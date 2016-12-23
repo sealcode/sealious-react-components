@@ -45,7 +45,7 @@ function ResourceSelectPure(props_arg){
 		return (
 			<label>
 				{props.label}
-				<select onChange={handleChange} value={props.value} disabled={props.disabled}>
+				<select onChange={handleChange} value={props.value} disabled={props.disabled} className={props.className}>
 					{options}
 				</select>
 			</label>
