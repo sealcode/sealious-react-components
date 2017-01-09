@@ -10,7 +10,7 @@ module.exports = function PaginationUI(props){
 			style={{visibility: props.hasPrev? "visible" : "hidden"}}
 		>
 			<a href={props.prevPageUrl} onClick={props.onPrev} key="navigation-prev-anchor">
-				&#x25C0; poprzednie
+				Poprzednia&nbsp;strona
 			</a>
 		</li>
 		<li
@@ -19,7 +19,7 @@ module.exports = function PaginationUI(props){
 			style={{visibility: props.hasNext? "visible" : "hidden"}}
 		>
 			<a href={props.nextPageUrl} onClick={props.onNext} key="navigation-next-anchor">
-				następne &#x25B6;
+				Następna&nbsp;strona
 			</a>
 		</li>
 	</ul>
