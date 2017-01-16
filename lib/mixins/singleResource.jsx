@@ -109,7 +109,7 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 		update: function(e){
 			const self = this;
 			e && e.preventDefault();
-			var temp_body = clone(this.state.temp_body);
+			var temp_body = Object.assign({}, this.state.temp_body);
 			for(var i in temp_body){
 				if(
 					self.props.ignoredFields.indexOf(i) !== -1 ||
@@ -122,7 +122,11 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 				}
 			}
 			var url = self.getCleanUrl();
-			return rest.map("patch", url, temp_body, {cache: true});
+			const fd = new FormData();
+			for (var i in temp_body) {
+				fd.append(i, temp_body[i]);
+			}
+			return rest.map("patch", url, fd, {cache: true});
 		},
 		delete: function(){
 			rest.delete(this.props.url, {}, {cache: true})
@@ -134,9 +138,12 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 		getFieldChangeHandler: function(field_name){
 			var self = this;
 			return function(e){
-				var temp_body = clone(self.state.temp_body);
-				if(e.preventDefault){
-					//e.preventDefault();
+				var temp_body = Object.assign({}, self.state.temp_body);
+				if(e.preventDefault && e.target.type === "file"){
+					temp_body[field_name] = e.target.files[0];
+				}else if(e.preventDefault && e.target.type === "checkbox"){
+					temp_body[field_name] = e.target.checked;
+				}else if(e.preventDefault && e.target.type !== "checkbox"){
 					temp_body[field_name] = e.target.value;
 				}else{
 					temp_body[field_name] = e;
