@@ -5,7 +5,6 @@ const CachedHttp = require("../cached-http.js");
 const Loading = require("./../loading.js");
 const SimpleError = require("./../simple-error.jsx");
 
-
 import clone from "clone";
 
 module.exports =  function singleResource(ComponentClass, ErrorClass){
@@ -122,6 +121,9 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 				}
 			}
 			var url = self.getCleanUrl();
+			if (typeof temp_body.profile_photo === "string"){
+				delete temp_body.profile_photo;
+			}
 			const fd = new FormData();
 			for (var i in temp_body) {
 				fd.append(i, temp_body[i]);
