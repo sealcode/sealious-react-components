@@ -108,7 +108,7 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 		update: function(e){
 			const temp_body = this.state.resource.body;
 			const temp_new_body = this.state.temp_body;
-			const request_body = Object.keys(temp_body).reduce(function(prev, next){
+			const request_body = Object.keys(temp_new_body).reduce(function(prev, next){
 				if (temp_body[next] !== temp_new_body[next]) {
 					prev[next] = temp_new_body[next];
 				}
