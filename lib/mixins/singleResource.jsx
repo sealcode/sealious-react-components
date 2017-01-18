@@ -106,27 +106,23 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 			return parsed_url.origin + parsed_url.pathname;
 		},
 		update: function(e){
+			const temp_body = this.state.resource.body;
+			const temp_new_body = this.state.temp_body;
+			const request_body = Object.keys(temp_body).reduce(function(prev, next){
+				if (temp_body[next] !== temp_new_body[next]) {
+					prev[next] = temp_new_body[next];
+				}
+				return prev;
+			}, {});
 			const self = this;
 			e && e.preventDefault();
-			var temp_body = Object.assign({}, this.state.temp_body);
-			for(var i in temp_body){
-				if(
-					self.props.ignoredFields.indexOf(i) !== -1 ||
-					temp_body[i]==="" ||
-					temp_body[i]===null ||
-					temp_body[i]=="undefined" ||
-					temp_body[i]===undefined
-				){
-					delete temp_body[i];
-				}
-			}
 			var url = self.getCleanUrl();
-			if (typeof temp_body.profile_photo === "string"){
-				delete temp_body.profile_photo;
+			if (typeof request_body.profile_photo === "string"){
+				delete request_body.profile_photo;
 			}
 			const fd = new FormData();
-			for (var i in temp_body) {
-				fd.append(i, temp_body[i]);
+			for (var i in request_body) {
+				fd.append(i, request_body[i]);
 			}
 			return rest.map("patch", url, fd, {cache: true});
 		},
