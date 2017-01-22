@@ -1,5 +1,6 @@
 const React = require("react");
 // rest.setDefaultDataType('formdata');
+const merge = require("merge");
 const rest = require("qwest");
 const CachedHttp = require("../cached-http.js");
 const Loading = require("./../loading.js");
@@ -167,13 +168,18 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 			}
 			if(this.state.loaded){
 				try{
-					return React.createElement(ComponentClass, {
-						resource: this.state.resource,
-						body: this.state.temp_body,
-						handlers: this.getAllHandlers(),
-						onSubmit: this.update,
-						onDelete: this.delete,
-					});
+					const component_props = merge( 
+						true, 
+						this.props,
+						{
+							resource: this.state.resource,
+							body: this.state.temp_body,
+							handlers: this.getAllHandlers(),
+							onSubmit: this.update,
+							onDelete: this.delete,
+						}
+					);
+					return React.createElement(ComponentClass, component_props);
 				}catch(error){
 					console.log(error);
 				}

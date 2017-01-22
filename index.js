@@ -21,4 +21,7 @@ module.exports = {
   PaginationUI: require("./lib/pagination-ui.jsx"),
   PropMultiplexer: require("./lib/prop-multiplexer.js"),
   Loading: require("./lib/loading.js"),
+  ResourcePicker: require("./lib/resource-picker/index.jsx"),
+  KeyValueStore: require("./lib/stores/key-value-store.js"),
+  ConnectWithKeyValueStore: require("./lib/stores/connect-with-key-value-store.jsx"),
 };
