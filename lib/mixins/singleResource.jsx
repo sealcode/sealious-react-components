@@ -123,7 +123,7 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 			}
 			const fd = new FormData();
 			for (var i in request_body) {
-				if(request_body[i]!==""){
+				if(request_body[i]!==undefined){
 					fd.append(i, request_body[i]);
 				}
 			}
@@ -140,6 +140,9 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 			var self = this;
 			return function(e){
 				var temp_body = Object.assign({}, self.state.temp_body);
+				if(e.target.type == "select-one" && e.target.value == ""){
+					delete temp_body[field_name];
+				}
 				if(e.preventDefault && e.target.type === "file"){
 					temp_body[field_name] = e.target.files[0];
 				}else if(e.preventDefault && e.target.type === "checkbox"){
