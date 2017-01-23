@@ -123,7 +123,9 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 			}
 			const fd = new FormData();
 			for (var i in request_body) {
-				fd.append(i, request_body[i]);
+				if(request_body[i]!==""){
+					fd.append(i, request_body[i]);
+				}
 			}
 			return rest.map("patch", url, fd, {cache: true});
 		},
