@@ -31,7 +31,7 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 		getTempBody: function(specification, resource){
 			const temp_body = {};
 			for(var field_name in specification.fields){
-				temp_body[field_name] = resource.body[field_name] || "";
+				temp_body[field_name] = resource.body[field_name]===undefined? "" : resource.body[field_name];
 			}
 			return temp_body;
 		},
