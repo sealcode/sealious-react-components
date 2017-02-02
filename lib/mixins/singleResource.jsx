@@ -65,6 +65,9 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 				return CachedHttp.get("/api/v1/specifications/" + collection_name);
 			})
 			.then(function(data){
+				if(self.props.onLoad){
+					self.props.onLoad(resource);
+				}
 				const specification = data;
 				try{
 					self.setState({
