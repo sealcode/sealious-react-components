@@ -59,7 +59,8 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 				try {
 					parsed_url = new URL(url);
 				}catch(e){
-					parsed_url = new URL(document.location.origin + url);
+					parsed_url = {pathname: url.split("?")[0]};
+					//parsed_url = new URL(document.location.origin + url);
 				}
 				const collection_name = parsed_url.pathname.split("/").slice(-2)[0];
 				return CachedHttp.get("/api/v1/specifications/" + collection_name);
@@ -82,6 +83,7 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 				}
 			})
 			.catch(function(e, xml, error_data){
+				console.log("errorrrrrrrrr", e);
 				try{
 					console.error("ERROR!", e);
 					self.setState({
