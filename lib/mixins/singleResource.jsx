@@ -8,6 +8,31 @@ const SimpleError = require("./../simple-error.jsx");
 
 import clone from "clone";
 
+if (typeof Object.assign != 'function') {
+  Object.assign = function(target, varArgs) { // .length of function is 2
+    'use strict';
+    if (target == null) { // TypeError if undefined or null
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
+
+    var to = Object(target);
+
+    for (var index = 1; index < arguments.length; index++) {
+      var nextSource = arguments[index];
+
+      if (nextSource != null) { // Skip over if undefined or null
+        for (var nextKey in nextSource) {
+          // Avoid bugs when hasOwnProperty is shadowed
+          if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            to[nextKey] = nextSource[nextKey];
+          }
+        }
+      }
+    }
+    return to;
+  };
+}
+
 module.exports =  function singleResource(ComponentClass, ErrorClass){
 
 	if(!ErrorClass) ErrorClass = SimpleError;
@@ -86,7 +111,6 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 				}
 			})
 			.catch(function(e, xml, error_data){
-				console.log("errorrrrrrrrr", e);
 				try{
 					console.error("ERROR!", e);
 					self.setState({
@@ -112,10 +136,10 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 			return parsed_url.origin + parsed_url.pathname;
 		},
 		update: function(e){
-			const temp_body = this.state.resource.body;
+			const old_resource = this.state.resource.body;
 			const temp_new_body = this.state.temp_body;
 			const request_body = Object.keys(temp_new_body).reduce(function(prev, next){
-				if (temp_body[next] !== temp_new_body[next]) {
+				if (old_resource[next] !== temp_new_body[next] && temp_new_body[next] !== "") {
 					prev[next] = temp_new_body[next];
 				}
 				return prev;
