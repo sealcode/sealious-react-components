@@ -5,6 +5,7 @@ const rest = require("qwest");
 const CachedHttp = require("../cached-http.js");
 const Loading = require("./../loading.js");
 const SimpleError = require("./../simple-error.jsx");
+const errorToString = require("./../error-to-string.js");
 
 import clone from "clone";
 
@@ -139,7 +140,7 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 			const old_resource = this.state.resource.body;
 			const temp_new_body = this.state.temp_body;
 			const request_body = Object.keys(temp_new_body).reduce(function(prev, next){
-				if (old_resource[next] !== temp_new_body[next] && temp_new_body[next] !== "") {
+				if (old_resource[next] !== temp_new_body[next]) {
 					prev[next] = temp_new_body[next];
 				}
 				return prev;
@@ -156,7 +157,10 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 					fd.append(i, request_body[i]);
 				}
 			}
-			return rest.map("patch", url, fd, {cache: true});
+			return rest.map("patch", url, fd, {cache: true})
+			.catch(function(xml1, xml2, error){
+				alert(errorToString(error));
+			});
 		},
 		delete: function(){
 			rest.delete(this.props.url, {}, {cache: true})
@@ -169,7 +173,7 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 			var self = this;
 			return function(e){
 				var temp_body = Object.assign({}, self.state.temp_body);
-				if(e.target.type == "select-one" && e.target.value == ""){
+				if(e.target && e.target.type == "select-one"){
 					delete temp_body[field_name];
 				}
 				if(e.preventDefault && e.target.type === "file"){

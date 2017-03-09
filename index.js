@@ -24,4 +24,5 @@ module.exports = {
   ResourcePicker: require("./lib/resource-picker/index.jsx"),
   KeyValueStore: require("./lib/stores/key-value-store.js"),
   ConnectWithKeyValueStore: require("./lib/stores/connect-with-key-value-store.jsx"),
+  errorToString: require("./lib/error-to-string.js"),
 };

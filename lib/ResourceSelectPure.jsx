@@ -36,7 +36,7 @@ function ResourceSelectPure(props_arg){
 
 		if(props.allowNoValue){
 			options.unshift(
-				<option value="undefined" key="empty">
+				<option value="" key="empty">
 					{props.noValueOptionName}
 				</option>
 			);
