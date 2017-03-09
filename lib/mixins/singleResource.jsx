@@ -173,6 +173,19 @@ module.exports =  function singleResource(ComponentClass, ErrorClass){
 					delete temp_body[field_name];
 				}
 				if(e.preventDefault && e.target.type === "file"){
+					const file = e.target.files[0];
+					const reader  = new FileReader();
+
+					reader.addEventListener("load", function () {
+						file.base64 = reader.result;
+						self.setState({
+							temp_body: merge(true, self.state.temp_body, {[field_name]: file}),
+						});
+					}, false);
+
+					if (file) {
+						reader.readAsDataURL(file);
+					}
 					temp_body[field_name] = e.target.files[0];
 				}else if(e.preventDefault && e.target.type === "checkbox"){
 					temp_body[field_name] = e.target.checked;
