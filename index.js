@@ -25,4 +25,6 @@ module.exports = {
   KeyValueStore: require("./lib/stores/key-value-store.js"),
   ConnectWithKeyValueStore: require("./lib/stores/connect-with-key-value-store.jsx"),
   errorToString: require("./lib/error-to-string.js"),
+  PropCombinator: require("./lib/prop-combinator.js"),
+  TransformProps: require("./lib/transform-props.js"),
 };
