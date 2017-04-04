@@ -1,58 +1,75 @@
 import React from "react";
-import resourceTypeCollection from './mixins/resourceTypeCollection.jsx';
+import resourceTypeCollection from "./mixins/resourceTypeCollection.jsx";
 import merge from "merge";
 
 const default_props = {
-	displayAttr: "id",
-	valueAttr: "id",
-	noValueOptionName: "--",
-	allowNoValue: false,
-	onValueChange: (value) => alert(value),
-	label: "Select resource:",
-	disabled: false,
-	value: "",
-	resources: [],
+    displayAttr: "id",
+    valueAttr: "id",
+    noValueOptionName: "--",
+    allowNoValue: false,
+    onValueChange: value => alert(value),
+    label: "Select resource:",
+    disabled: false,
+    value: "",
+    resources: [],
+    displayAttrIsSafe: false,
 };
 
-function ResourceSelectPure(props_arg){
+function ResourceSelectPure(props_arg) {
+    const props = merge(true, default_props, props_arg);
 
-	const props = merge(true, default_props, props_arg);
+    function handleChange(e) {
+        props.onValueChange(e.target.value);
+    }
 
-	function handleChange(e){
-		props.onValueChange(e.target.value);
-	}
+    try {
+        const options = props.resources.map(resource => {
+            const value = resource[props.valueAttr] ||
+                resource.body[props.valueAttr];
+            const name = resource[props.displayAttr] ||
+                resource.body[props.displayAttr];
+            const key = resource.id;
+            if (props.displayAttrIsSafe) {
+                return (
+                    <option
+                        value={value}
+                        key={key}
+                        dangerouslySetInnerHTML={{ __html: name }}
+                    />
+                );
+            } else {
+                return (
+                    <option value={value} key={key}>
+                        {name}
+                    </option>
+                );
+            }
+        });
 
-	try{
-		const options = props.resources.map((resource) => {
-			const value = resource[props.valueAttr] || resource.body[props.valueAttr];
-			const name = resource[props.displayAttr] || resource.body[props.displayAttr];
-			const key = resource.id;
-			return (
-				<option value={value} key={key}>
-					{name}
-				</option>
-			);
-		});
+        if (props.allowNoValue) {
+            options.unshift(
+                <option value="" key="empty">
+                    {props.noValueOptionName}
+                </option>
+            );
+        }
 
-		if(props.allowNoValue){
-			options.unshift(
-				<option value="" key="empty">
-					{props.noValueOptionName}
-				</option>
-			);
-		}
-
-		return (
-			<label className={props.labelClassName}>
-				{props.label}
-				<select onChange={handleChange} value={props.value} disabled={props.disabled} className={props.className}>
-					{options}
-				</select>
-			</label>
-		);
-	}catch(e){
-		console.error(e);
-	}
-};
+        return (
+            <label className={props.labelClassName}>
+                {props.label}
+                <select
+                    onChange={handleChange}
+                    value={props.value}
+                    disabled={props.disabled}
+                    className={props.className}
+                >
+                    {options}
+                </select>
+            </label>
+        );
+    } catch (e) {
+        console.error(e);
+    }
+}
 
 export default ResourceSelectPure;
