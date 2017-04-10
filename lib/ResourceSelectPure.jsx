@@ -15,6 +15,23 @@ const default_props = {
     displayAttrIsSafe: false,
 };
 
+function getAttr(name, resource, props) {
+    const propname = name + "Attr";
+    if (typeof props[propname] === "string") {
+        return resource[props[propname]] || resource.body[props[propname]];
+    } else if (typeof props[propname] === "function") {
+        return props[propname](resource);
+    }
+}
+
+function getOptionValue(resource, props) {
+    return getAttr("value", resource, props);
+}
+
+function getOptionName(resource, props) {
+    return getAttr("display", resource, props);
+}
+
 function ResourceSelectPure(props_arg) {
     const props = merge(true, default_props, props_arg);
 
@@ -24,10 +41,8 @@ function ResourceSelectPure(props_arg) {
 
     try {
         const options = props.resources.map(resource => {
-            const value = resource[props.valueAttr] ||
-                resource.body[props.valueAttr];
-            const name = resource[props.displayAttr] ||
-                resource.body[props.displayAttr];
+            const value = getOptionValue(resource, props);
+            const name = getOptionName(resource, props);
             const key = resource.id;
             if (props.displayAttrIsSafe) {
                 return (
