@@ -39,52 +39,48 @@ function ResourceSelectPure(props_arg) {
         props.onValueChange(e.target.value);
     }
 
-    try {
-        const options = props.resources.map(resource => {
-            const value = getOptionValue(resource, props);
-            const name = getOptionName(resource, props);
-            const key = resource.id;
-            if (props.displayAttrIsSafe) {
-                return (
-                    <option
-                        value={value}
-                        key={key}
-                        dangerouslySetInnerHTML={{ __html: name }}
-                    />
-                );
-            } else {
-                return (
-                    <option value={value} key={key}>
-                        {name}
-                    </option>
-                );
-            }
-        });
-
-        if (props.allowNoValue) {
-            options.unshift(
-                <option value="" key="empty">
-                    {props.noValueOptionName}
+    const options = props.resources.map(resource => {
+        const value = getOptionValue(resource, props);
+        const name = getOptionName(resource, props);
+        const key = resource.id;
+        if (props.displayAttrIsSafe) {
+            return (
+                <option
+                    value={value}
+                    key={key}
+                    dangerouslySetInnerHTML={{ __html: name }}
+                />
+            );
+        } else {
+            return (
+                <option value={value} key={key}>
+                    {name}
                 </option>
             );
         }
+    });
 
-        return (
-            <label className={props.labelClassName}>
-                {props.label}
-                <select
-                    onChange={handleChange}
-                    value={props.value}
-                    disabled={props.disabled}
-                    className={props.className}
-                >
-                    {options}
-                </select>
-            </label>
+    if (props.allowNoValue) {
+        options.unshift(
+            <option value="" key="empty">
+                {props.noValueOptionName}
+            </option>
         );
-    } catch (e) {
-        console.error(e);
     }
+
+    return (
+        <label className={props.labelClassName}>
+            {props.label}
+            <select
+                onChange={handleChange}
+                value={props.value}
+                disabled={props.disabled}
+                className={props.className}
+            >
+                {options}
+            </select>
+        </label>
+    );
 }
 
 export default ResourceSelectPure;
