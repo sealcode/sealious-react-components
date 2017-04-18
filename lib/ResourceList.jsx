@@ -63,7 +63,6 @@ const PureResourceList = function(containerClass, listElementClass, custom_props
 module.exports = function(containerClass, listElementClass, custom_props){
 	return function(props){
 		const merged_props = Object.assign({}, custom_props, props);
-		console.log(merged_props);
 		return PureResourceList(containerClass, listElementClass, merged_props);
 	};
 };
