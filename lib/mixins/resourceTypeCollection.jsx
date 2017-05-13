@@ -24,6 +24,7 @@ export default function resourceTypeCollection(ComponentClass) {
                 search: "",
                 url: "/api/v1/collections/users",
                 loadingComponent: () => React.createElement(Loading),
+                customSort: list => list,
             };
         },
         generateQuery: function(props) {
@@ -59,7 +60,7 @@ export default function resourceTypeCollection(ComponentClass) {
             }).then(response => {
                 this.setState({
                     loading: false,
-                    resources: response,
+                    resources: this.props.customSort(response),
                     last_query: clone(query),
                 });
             });
