@@ -28,4 +28,9 @@ module.exports = {
     PropCombinator: require("./lib/prop-combinator.js"),
     TransformProps: require("./lib/transform-props.js"),
     Events: require("./lib/events.js"),
+    createStatelessQueryCollection: require("./lib/create-stateless-collection.jsx"),
+    createStatefulQuery: require("./lib/create-stateful-query.js"),
+    createUrlfulQuery: require("./lib/create-urlful-query.js"),
+    UrlfulPagination: require("./lib/urlful-pagination.jsx"),
+    createStatelessCollectionFilters: require("./lib/create-stateless-collection-filters.jsx"),
 };
