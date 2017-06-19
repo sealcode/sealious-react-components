@@ -14,6 +14,11 @@ const DEFAULT_PARAMS = {
     show_loading: false,
 };
 
+const DEFAULT_PAGINATION = {
+    page: 1,
+    items: 12,
+};
+
 function createStatelessQueryCollection(params) {
     params = merge(true, DEFAULT_PARAMS, params);
 
@@ -49,10 +54,12 @@ function createStatelessQueryCollection(params) {
                                 answer: data,
                                 resources: data.slice(
                                     0,
-                                    self.props.query.pagination.items
+                                    (self.props.query.pagination ||
+                                        DEFAULT_PAGINATION).items
                                 ),
                                 has_next_page: data.length >
-                                    self.props.query.pagination.items,
+                                    (self.props.query.pagination ||
+                                        DEFAULT_PAGINATION).items,
                                 loaded: true,
                                 current_promise: null,
                                 last_query: JSON.stringify(query),

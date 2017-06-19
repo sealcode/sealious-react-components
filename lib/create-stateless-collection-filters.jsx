@@ -8,6 +8,54 @@ const loadCollectionSpecification = require("./mixins/load-collection-specificat
 const EMPTY_VALUE_ID = "a2e4822a98337283e39f7b60acf85ec9";
 
 const filter_components = {
+    text: function(field_specification, description, query, setValue) {
+        const regex_prefix = description && description.match_from_start
+            ? "^"
+            : ".*";
+
+        function wrap_in_regex(string) {
+            return regex_prefix + string + ".*";
+        }
+        function strip_regex(string) {
+            return string.slice(regex_prefix.length).slice(0, -2);
+        }
+
+        let parsed_value = query[field_specification.name];
+        if (parsed_value && parsed_value.regex) {
+            parsed_value = strip_regex(parsed_value.regex);
+        }
+
+        return (
+            <label htmlFor={field_specification.name}>
+                {description.label || field_specification.name}
+                <input
+                    type="text"
+                    value={parsed_value}
+                    onChange={function(e) {
+                        setValue(
+                            e.target.value == ""
+                                ? undefined
+                                : description && description.partial
+                                      ? {
+                                            regex: wrap_in_regex(
+                                                e.target.value
+                                            ),
+                                        }
+                                      : e.target.value
+                        );
+                    }}
+                />
+            </label>
+        );
+    },
+    email: function(field_specification, description, query, setValue) {
+        return filter_components.text(
+            field_specification,
+            description,
+            query,
+            setValue
+        );
+    },
     enum: function(field_specification, description, query, setValue) {
         return (
             <label htmlFor={description.name}>
@@ -46,49 +94,33 @@ const filter_components = {
         );
     },
     "allow-value-per-role": function(
-        props,
-        field,
-        value,
-        label,
-        displayed_value,
-        control_options
+        field_specification,
+        description,
+        query,
+        setValue
     ) {
         const new_field = {
-            name: field.name,
+            name: field_specification.name,
             params: {
-                values: Object.keys(field.params.value_to_role),
+                values: Object.keys(field_specification.params.value_to_role),
             },
         };
-        return filter_components.enum(
-            props,
-            new_field,
-            value,
-            label,
-            displayed_value,
-            control_options
-        );
+        return filter_components.enum(new_field, description, query, setValue);
     },
     "role-allow-edit": function(
-        props,
-        field,
-        value,
-        label,
-        displayed_value,
-        control_options
+        field_specification,
+        description,
+        query,
+        setValue
     ) {
         const new_field = {
-            name: field.name,
-            params: field.params.target_params,
+            name: field_specification.name,
+            params: field_specification.params.target_params,
         };
-        if (filter_components[field.params.target_field_type]) {
-            return filter_components[field.params.target_field_type](
-                props,
-                new_field,
-                value,
-                label,
-                displayed_value,
-                control_options
-            );
+        if (filter_components[field_specification.params.target_field_type]) {
+            return filter_components[
+                field_specification.params.target_field_type
+            ](new_field, description, query, setValue);
         } else {
             return null;
         }
@@ -108,7 +140,7 @@ const filter_components = {
                             field_specification.params.collection
                     }
                     label={description.label || description.name}
-                    className="dropdown-large dropdown filter-list-element"
+                    className="dropdown-large dropdown"
                     displayAttr="name"
                     displayAttrIsSafe={true}
                     value={query.filter && query.filter[description.name]}

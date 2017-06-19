@@ -2,16 +2,20 @@ const React = require("react");
 const RouterLink = require("./RouterLink.js");
 const merge = require("merge");
 
+const DEFAULT_PAGINATION = {
+    page: 1,
+    items: 12,
+};
+
 const UrlfulPagination = function(props) {
+    const pagination_info = props.query.pagination || DEFAULT_PAGINATION;
     return (
         <ul className="resource-list-pagination" key="navigation">
             <li
                 className="btn"
                 key="navigation-prev"
                 style={{
-                    visibility: props.query.pagination.page > 1
-                        ? "visible"
-                        : "hidden",
+                    visibility: pagination_info.page > 1 ? "visible" : "hidden",
                 }}
             >
                 <RouterLink
@@ -20,17 +24,14 @@ const UrlfulPagination = function(props) {
                             props.queryStoreHelpers.getCompactQuery(
                                 merge.recursive(true, props.query, {
                                     pagination: {
-                                        page: (props.query.pagination.page ||
-                                            0) - 1,
+                                        page: (pagination_info.page || 0) - 1,
                                     },
                                 })
                             )
                         ),
                     }}
                     onClick={() =>
-                        props.helpers.setPage(
-                            (props.query.pagination.page || 0) - 1
-                        )}
+                        props.helpers.setPage((pagination_info.page || 0) - 1)}
                     key="navigation-prev-anchor"
                 >
                     Poprzednia&nbsp;strona
@@ -50,17 +51,14 @@ const UrlfulPagination = function(props) {
                             props.queryStoreHelpers.getCompactQuery(
                                 merge.recursive(true, props.query, {
                                     pagination: {
-                                        page: (props.query.pagination.page ||
-                                            0) + 1,
+                                        page: (pagination_info.page || 0) + 1,
                                     },
                                 })
                             )
                         ),
                     }}
                     onClick={() =>
-                        props.helpers.setPage(
-                            (props.query.pagination.page || 0) + 1
-                        )}
+                        props.helpers.setPage((pagination_info.page || 0) + 1)}
                     key="navigation-next-anchor"
                 >
                     Następna&nbsp;strona
