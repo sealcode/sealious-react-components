@@ -33,4 +33,5 @@ module.exports = {
     createUrlfulQuery: require("./lib/create-urlful-query.js"),
     UrlfulPagination: require("./lib/urlful-pagination.jsx"),
     createStatelessCollectionFilters: require("./lib/create-stateless-collection-filters.jsx"),
+    PageSizeDropdown: require("././lib/page-size-dropdown.jsx"),
 };

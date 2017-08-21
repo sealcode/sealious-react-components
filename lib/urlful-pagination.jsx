@@ -51,14 +51,14 @@ const UrlfulPagination = function(props) {
                             props.queryStoreHelpers.getCompactQuery(
                                 merge.recursive(true, props.query, {
                                     pagination: {
-                                        page: (pagination_info.page || 0) + 1,
+                                        page: (pagination_info.page || 1) + 1,
                                     },
                                 })
                             )
                         ),
                     }}
                     onClick={() =>
-                        props.helpers.setPage((pagination_info.page || 0) + 1)}
+                        props.helpers.setPage((pagination_info.page || 1) + 1)}
                     key="navigation-next-anchor"
                 >
                     Następna&nbsp;strona
