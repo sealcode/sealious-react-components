@@ -33,6 +33,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "babelify": "^7.3.0",
     "bluebird": "^3.4.1",
     "clone": "^1.0.2",
