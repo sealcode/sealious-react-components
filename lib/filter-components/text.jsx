@@ -6,8 +6,7 @@ module.exports = function TextInput(
 	query,
 	setValue
 ) {
-	const regex_prefix =
-		description && description.match_from_start ? "^" : ".*";
+	const regex_prefix = description && description.match_from_start ? "^" : ".*";
 
 	function wrap_in_regex(string) {
 		return regex_prefix + string + ".*";
@@ -16,12 +15,10 @@ module.exports = function TextInput(
 		return string.slice(regex_prefix.length).slice(0, -2);
 	}
 
-	let parsed_value = query.filter[field_specification.name];
+	let parsed_value = (query.filter || {})[field_specification.name];
 	if (parsed_value && parsed_value.regex) {
 		parsed_value = strip_regex(parsed_value.regex);
 	}
-
-	console.log(query.filter[field_specification.name], parsed_value);
 
 	return (
 		<label htmlFor={field_specification.name}>
@@ -35,7 +32,7 @@ module.exports = function TextInput(
 							? undefined
 							: description && description.partial
 								? {
-										regex: wrap_in_regex(e.target.value)
+										regex: wrap_in_regex(e.target.value),
 									}
 								: e.target.value
 					);
