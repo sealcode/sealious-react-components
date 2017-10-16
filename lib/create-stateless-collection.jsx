@@ -6,18 +6,17 @@ const Loading = require("./loading.js");
 
 const DEFAULT_PARAMS = {
 	collection: "",
-	inner_class: props =>
-		<div>
-			{props.answer.map(resource => resource.id).join(", ")}
-		</div>,
+	inner_class: props => (
+		<div>{props.answer.map(resource => resource.id).join(", ")}</div>
+	),
 	error_class: SimpleError,
 	loading_class: Loading,
-	show_loading: false
+	show_loading: false,
 };
 
 const DEFAULT_PAGINATION = {
 	page: 1,
-	items: 12
+	items: 12,
 };
 
 function createStatelessQueryCollection(params) {
@@ -33,7 +32,7 @@ function createStatelessQueryCollection(params) {
 				resources: [],
 				error: false,
 				current_promise: null,
-				has_next_page: false
+				has_next_page: false,
 			};
 		},
 		refresh: function() {
@@ -47,24 +46,27 @@ function createStatelessQueryCollection(params) {
 				let promise = CachedHttp.get(
 					"/api/v1/collections/" + params.collection,
 					merge.recursive(true, query, {
-						pagination: { forward_buffer: 1 }
+						pagination: { forward_buffer: 1 },
 					})
 				)
 					.then(function(data) {
+						console.log(
+							data.length,
+							self.props.query.pagination,
+							DEFAULT_PAGINATION
+						);
 						self.setState({
 							answer: data,
 							resources: data.slice(
 								0,
-								(self.props.query.pagination ||
-									DEFAULT_PAGINATION).items
+								(self.props.query.pagination || DEFAULT_PAGINATION).items
 							),
 							has_next_page:
 								data.length >
-								(self.props.query.pagination ||
-									DEFAULT_PAGINATION).items,
+								(self.props.query.pagination || DEFAULT_PAGINATION).items,
 							loaded: true,
 							current_promise: null,
-							last_query: JSON.stringify(query)
+							last_query: JSON.stringify(query),
 						});
 					})
 					.catch(function(error) {
@@ -74,7 +76,7 @@ function createStatelessQueryCollection(params) {
 				self.setState({
 					error: false,
 					loaded: false,
-					current_promise: promise
+					current_promise: promise,
 				});
 			}, 0);
 		},
@@ -91,10 +93,10 @@ function createStatelessQueryCollection(params) {
 				setPage: function(page) {
 					self.props.setQuery({
 						pagination: merge(true, self.props.query.pagination, {
-							page: Math.max(0, parseInt(page))
-						})
+							page: Math.max(0, parseInt(page)),
+						}),
 					});
-				}
+				},
 			};
 		},
 		render: function() {
@@ -118,7 +120,7 @@ function createStatelessQueryCollection(params) {
 					metadata={self.props.metadata}
 				/>
 			);
-		}
+		},
 	});
 }
 

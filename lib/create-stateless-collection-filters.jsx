@@ -18,40 +18,31 @@ function createStatelessCollectionFilters(params) {
 					className={`filter-list-element resource-filters__filter resource-filters__filter--${description.name} async`}
 				>
 					{FilterComponents[
-						this.props.specification.fields[description.name].type
-							.name
+						this.props.specification.fields[description.name].type.name
 					](
 						this.props.specification.fields[description.name],
 						description,
 						this.props.query,
 						value => {
-							if (value === FilterComponents.EMPTY_VALUE_ID)
-								value = undefined;
-							const new_query = merge.recursive(
-								true,
-								this.props.query,
-								{
-									filter: { [description.name]: value },
-									pagination: {
-										page: 1
-									}
-								}
-							);
+							if (value === FilterComponents.EMPTY_VALUE_ID) value = undefined;
+							const new_query = merge.recursive(true, this.props.query, {
+								filter: { [description.name]: value },
+								pagination: {
+									page: 1,
+								},
+							});
 							params.fields
 								.map(
 									description =>
 										description.hideIf
-											? description.hideIf(new_query)
-												? description
-												: false
+											? description.hideIf(new_query) ? description : false
 											: false
 								)
 								.filter(e => e)
 								.forEach(
 									description =>
 										(new_query.filter[description.name] =
-											description.value_when_hidden ||
-											undefined)
+											description.value_when_hidden || undefined)
 								);
 							this.props.setQuery(new_query);
 						}
@@ -65,11 +56,7 @@ function createStatelessCollectionFilters(params) {
 				<div
 					className={`resource-filters resource-filters--${params.collection} filter-${params.collection}`}
 				>
-					<ul
-						className={
-							params.collection + "-filter resource-filters"
-						}
-					>
+					<ul className={params.collection + "-filter resource-filters"}>
 						{params.fields
 							.filter(
 								description =>
@@ -81,7 +68,7 @@ function createStatelessCollectionFilters(params) {
 					</ul>
 				</div>
 			);
-		}
+		},
 	});
 
 	return loadCollectionSpecification(params.collection, Filters, Loading);
