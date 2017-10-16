@@ -16,6 +16,7 @@ function createStatelessCollectionFilters(params) {
 			return (
 				<li
 					className={`filter-list-element resource-filters__filter resource-filters__filter--${description.name} async`}
+					key={description.name}
 				>
 					{FilterComponents[
 						this.props.specification.fields[description.name].type.name
