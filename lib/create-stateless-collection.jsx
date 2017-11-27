@@ -50,24 +50,26 @@ function createStatelessQueryCollection(params) {
 					})
 				)
 					.then(function(data) {
-						console.log(
-							data.length,
-							self.props.query.pagination,
-							DEFAULT_PAGINATION
-						);
-						self.setState({
-							answer: data,
-							resources: data.slice(
-								0,
-								(self.props.query.pagination || DEFAULT_PAGINATION).items
-							),
-							has_next_page:
-								data.length >
-								(self.props.query.pagination || DEFAULT_PAGINATION).items,
-							loaded: true,
-							current_promise: null,
-							last_query: JSON.stringify(query),
-						});
+						if (data) {
+							console.log(
+								data.length,
+								self.props.query.pagination,
+								DEFAULT_PAGINATION
+							);
+							self.setState({
+								answer: data,
+								resources: data.slice(
+									0,
+									(self.props.query.pagination || DEFAULT_PAGINATION).items
+								),
+								has_next_page:
+									data.length >
+									(self.props.query.pagination || DEFAULT_PAGINATION).items,
+								loaded: true,
+								current_promise: null,
+								last_query: JSON.stringify(query),
+							});
+						}
 					})
 					.catch(function(error) {
 						console.error(error);
